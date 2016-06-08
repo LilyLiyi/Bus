@@ -14,7 +14,7 @@ public class L {
     private static final String LOG_FORMAT = "%1$s\n%2$s";
     private static final String STACK_FORMAT = "%s.%s(%s:%d) %s";
 
-    private static final boolean canWriteLogs = true; // 总开关
+    private static final boolean canWriteLogs = false; // 总开关
     private static final boolean canWriteVerboseLogs = true;
     private static final boolean canWriteDebugLogs = true;
     private static final boolean canWriteInfoLogs = true;
