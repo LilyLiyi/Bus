@@ -7,6 +7,8 @@ import android.graphics.Bitmap;
 import android.provider.Settings;
 import android.text.TextUtils;
 
+import com.scrat.app.core.CommonContext;
+
 import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
 import java.text.DateFormat;
@@ -130,5 +132,27 @@ public class Utils {
             ret[x++] = HEX[0x0F & v];
         }
         return new String(ret);
+    }
+
+    public static int getVersionCode() {
+        try {
+            String pkgName = CommonContext.getContext().getPackageName();
+            return CommonContext.getContext().getPackageManager()
+                    .getPackageInfo(pkgName, 0).versionCode;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public static String getVersionName() {
+        try {
+            String pkName = CommonContext.getContext().getPackageName();
+            return CommonContext.getContext().getPackageManager()
+                    .getPackageInfo(pkName, 0).versionName;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 }
