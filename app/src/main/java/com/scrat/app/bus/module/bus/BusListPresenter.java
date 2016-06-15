@@ -113,6 +113,11 @@ public class BusListPresenter implements BusListContract.Presenter {
                     return;
 
                 int totalSize = itemList.size();
+                if (mBusStopInfoList.size() != totalSize) {
+                    mView.onLoadDataError();
+                    return;
+                }
+
                 for (int i = 0; i < totalSize; i++) {
                     LocationInfoItem locationInfoItem = itemList.get(i);
                     BusStopInfo busStopInfo = mBusStopInfoList.get(i);

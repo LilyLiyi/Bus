@@ -42,7 +42,6 @@ public class SearchFragment extends BaseFragment
     private EditText mSearchContentEt;
     private MyAdapter mAdapter;
 
-
     @Nullable
     @Override
     public View onCreateView(
@@ -113,7 +112,6 @@ public class SearchFragment extends BaseFragment
 
     @Override
     public void onClick(View v) {
-
         if (v == mSearchIv) {
             search();
         }
@@ -124,31 +122,50 @@ public class SearchFragment extends BaseFragment
             return;
 
         TextView resultTv = (TextView) getView().findViewById(R.id.tv_result);
+        if (resultTv == null)
+            return;
+
         resultTv.setVisibility(View.VISIBLE);
         resultTv.setText(content);
     }
 
     @Override
     public void showNoResult() {
+        if (getView() == null)
+            return;
+
         setResultText(getString(R.string.no_result));
         mAdapter.clear();
     }
 
     @Override
     public void showResult(List<BusInfo> busInfos) {
+        if (getView() == null)
+            return;
+
         int totalResult = busInfos.size();
         String searchResultFormat = getString(R.string.search_result);
         setResultText(String.format(searchResultFormat, totalResult));
         mAdapter.setList(busInfos);
+        if (totalResult == 1 && getContext() != null) {
+            BusInfo info = busInfos.get(0);
+            BusListActivity.show(getContext(), info.getBusId(), info.getBusName());
+        }
     }
 
     @Override
     public void onSearchError() {
+        if (getView() == null)
+            return;
+
         showMsg(getString(R.string.server_error));
     }
 
     @Override
     public void onContentEmptyError() {
+        if (getView() == null)
+            return;
+
         showMsg(getString(R.string.search_content_required));
     }
 
@@ -163,7 +180,14 @@ public class SearchFragment extends BaseFragment
         }
 
         @Override
-        protected void initView(final BaseRecyclerViewHolder holder, int position, BusInfo busInfo) {
+        protected BaseRecyclerViewHolder onCreateRecycleItemView(ViewGroup parent, int viewType) {
+            LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+            View view = inflater.inflate(R.layout.item_search_result, parent, false);
+            return new BaseRecyclerViewHolder(view);
+        }
+
+        @Override
+        protected void onBindItemViewHolder(BaseRecyclerViewHolder holder, int position, BusInfo busInfo) {
             holder.setText(R.id.tv_name, busInfo.getBusName());
             final String busId = busInfo.getBusId();
             final String busName = busInfo.getBusName();
@@ -178,23 +202,23 @@ public class SearchFragment extends BaseFragment
             });
         }
 
-        @Override
-        public BaseRecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-            View view = inflater.inflate(R.layout.item_search_result, parent, false);
-            return new BaseRecyclerViewHolder(view);
-        }
     }
 
 
     @Override
     public void showLoading() {
+        if (getView() == null)
+            return;
+
         super.showLoading();
         loading(true);
     }
 
     @Override
     public void hideLoading() {
+        if (getView() == null)
+            return;
+
         super.hideLoading();
         loading(false);
     }

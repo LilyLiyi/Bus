@@ -10,7 +10,7 @@
         android:id="@+id/ic_curr_stop"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:src="@mipmap/ic_launcher" />
+        android:src="@drawable/ic_menu_bus_blue" />
 
     <TextView
         android:id="@+id/tv_name"
@@ -21,10 +21,17 @@
         android:gravity="center_vertical"
         android:textColor="@color/black" />
 
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1px"
+        android:layout_below="@id/ic_curr_stop"
+        android:background="?android:attr/listDivider" />
+
     <ImageView
         android:id="@+id/ic_leaving_stop"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_below="@id/ic_curr_stop"
-        android:src="@mipmap/ic_launcher" />
+        android:src="@drawable/ic_menu_bus_blue" />
+
 </RelativeLayout>

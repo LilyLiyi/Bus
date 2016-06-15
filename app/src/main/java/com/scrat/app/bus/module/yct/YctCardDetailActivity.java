@@ -152,18 +152,19 @@ public class YctCardDetailActivity extends BaseActivity implements View.OnClickL
     private static class MyAdapter extends BaseRecyclerViewAdapter<NfcCardLog, BaseRecyclerViewHolder> {
 
         @Override
-        protected void initView(BaseRecyclerViewHolder holder, int position, NfcCardLog nfcCardLog) {
+        protected BaseRecyclerViewHolder onCreateRecycleItemView(ViewGroup parent, int viewType) {
+            LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+            View view = inflater.inflate(R.layout.item_nfc_rate, parent, false);
+            return new BaseRecyclerViewHolder(view);
+        }
+
+        @Override
+        protected void onBindItemViewHolder(BaseRecyclerViewHolder holder, int position, NfcCardLog nfcCardLog) {
             holder.setText(R.id.tv_rate, nfcCardLog.getRate())
                     .setText(R.id.tv_date, nfcCardLog.getDate())
                     .setText(R.id.tv_type, nfcCardLog.getType());
         }
 
-        @Override
-        public BaseRecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-            View view = inflater.inflate(R.layout.item_nfc_rate, parent, false);
-            return new BaseRecyclerViewHolder(view);
-        }
     }
 
 }

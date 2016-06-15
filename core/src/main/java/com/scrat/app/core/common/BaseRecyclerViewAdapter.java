@@ -1,6 +1,7 @@
 package com.scrat.app.core.common;
 
 import android.support.v7.widget.RecyclerView;
+import android.view.ViewGroup;
 
 import java.util.List;
 
@@ -9,27 +10,127 @@ import java.util.List;
  */
 public abstract class BaseRecyclerViewAdapter<Item, Holder extends BaseRecyclerViewHolder> extends RecyclerView.Adapter<Holder> {
 
-    protected abstract void initView(Holder holder, int position, Item item);
+    protected abstract Holder onCreateRecycleItemView(ViewGroup parent, int viewType);
+    protected abstract void onBindItemViewHolder(Holder holder, int position, Item item);
+
+    protected static final int sViewTypeHeader = 0;
+    protected static final int sViewTypeContent = 1;
+    protected static final int sViewTypeFooter = 2;
 
     private List<Item> mList;
 
+    private boolean mHasFooter;
+    private boolean mHasHeader;
+
+    public BaseRecyclerViewAdapter(boolean hasHeader, boolean hasFooter) {
+        mHasHeader = hasHeader;
+        mHasFooter = hasFooter;
+    }
+
+    public BaseRecyclerViewAdapter() {
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if (!mHasHeader && !mHasFooter) // 无Header, 无Footer
+            return sViewTypeContent;
+
+        if (mHasHeader && !mHasFooter) {// 只有Header
+            if (position == 0)
+                return sViewTypeHeader;
+            return sViewTypeContent;
+        }
+
+        if (!mHasHeader && mHasFooter) { // 只有Footer
+            if (mList.size() == position)
+                return sViewTypeFooter;
+            return sViewTypeContent;
+        }
+
+        // 有Footer 有Header
+        if (position == 0)
+            return sViewTypeHeader;
+        if (mList.size() + 1 == position)
+            return sViewTypeFooter;
+        return sViewTypeContent;
+    }
+
     @Override
     public void onBindViewHolder(Holder holder, int position) {
-        Item item = getItem(position);
-        if (item == null)
+        if (mHasHeader && position == 0) {
+            onBindHeaderViewHolder(holder);
             return;
+        }
 
-        initView(holder, position, item);
+        int realPos = getRealPosition(position);
+        Item item = getItem(realPos);
+        if (item == null) {
+            if (mHasFooter) {
+                onBindFooterViewHolder(holder);
+            }
+            return;
+        }
+
+        onBindItemViewHolder(holder, realPos, item);
+    }
+
+    @Override
+    public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
+        if (viewType == sViewTypeFooter)
+            return onCreateFooterViewHolder(parent);
+
+        if (viewType == sViewTypeHeader)
+            return onCreateHeaderViewHolder(parent);
+
+        return onCreateRecycleItemView(parent, viewType);
+    }
+
+    protected Holder onCreateHeaderViewHolder(ViewGroup parent) {
+        return null;
+    }
+
+    protected Holder onCreateFooterViewHolder(ViewGroup parent) {
+        return null;
+    }
+
+    protected void onBindFooterViewHolder(Holder holder) {
+    }
+
+    protected void onBindHeaderViewHolder(Holder holder) {
     }
 
     @Override
     public int getItemCount() {
-        return mList != null ? mList.size() : 0;
+        int count = 0;
+        if (mList != null) {
+            count = mList.size();
+        }
+
+        if (mHasFooter) {
+            count++;
+        }
+
+        if (mHasHeader) {
+            count++;
+        }
+
+        return count;
     }
 
     public void clear() {
+        if (mList == null)
+            return;
+
         mList.clear();
         notifyDataSetChanged();
+    }
+
+    private int getRealPosition(int position) {
+        int realPos = position;
+        if (mHasHeader) {
+            realPos--;
+        }
+        return realPos;
     }
 
     public void setList(List<Item> list) {
@@ -60,10 +161,13 @@ public abstract class BaseRecyclerViewAdapter<Item, Holder extends BaseRecyclerV
         notifyDataSetChanged();
     }
 
-    private Item getItem(int position) {
-        if (position + 1 > getItemCount())
+    private Item getItem(int realPos) {
+        if (mList == null)
             return null;
 
-        return mList.get(position);
+        if (realPos + 1 > mList.size())
+            return null;
+
+        return mList.get(realPos);
     }
 }
