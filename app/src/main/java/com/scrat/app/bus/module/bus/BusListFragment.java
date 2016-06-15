@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.scrat.app.bus.R;
 import com.scrat.app.bus.common.BaseFragment;
@@ -112,10 +111,19 @@ public class BusListFragment extends BaseFragment implements BusListContract.Vie
     }
 
     @Override
+    public void showNoBusOnline() {
+        if (getView() == null)
+            return;
+
+        showMsg(getString(R.string.no_bus_online));
+    }
+
+    @Override
     public void onLoadDataError() {
-        if (getView() != null) {
-            showMsg(getString(R.string.server_error));
-        }
+        if (getView() == null)
+            return;
+
+        showMsg(getString(R.string.server_error));
     }
 
     @Override

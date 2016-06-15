@@ -118,14 +118,22 @@ public class BusListPresenter implements BusListContract.Presenter {
                     return;
                 }
 
+                boolean hasBus = false;
                 for (int i = 0; i < totalSize; i++) {
                     LocationInfoItem locationInfoItem = itemList.get(i);
                     BusStopInfo busStopInfo = mBusStopInfoList.get(i);
                     busStopInfo.setArrivaled(locationInfoItem.isArrivaled());
                     busStopInfo.setLeaving(locationInfoItem.isLeaving());
+                    if (!hasBus) {
+                        hasBus = locationInfoItem.isLeaving() || locationInfoItem.isArrivaled();
+                    }
                 }
 
                 mView.showBusStop(mBusStopInfoList);
+
+                if (!hasBus) {
+                    mView.showNoBusOnline();
+                }
             }
 
             @Override

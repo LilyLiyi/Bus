@@ -62,9 +62,10 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".module.yct.YctCardBalanceActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.yct.YctCardBalanceActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <!--友盟 begin-->
         <meta-data
