@@ -108,6 +108,9 @@ public class YctCardDetailActivity extends BaseActivity implements View.OnClickL
     }
 
     private void loadData(Intent intent) {
+        if (intent == null)
+            return;
+
         String action = intent.getAction();
         if (action == null)
             return;
