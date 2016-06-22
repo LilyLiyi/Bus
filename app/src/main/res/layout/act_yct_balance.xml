@@ -2,11 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/custom_progress_orange_progress"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
+        android:background="@color/white"
         android:orientation="horizontal">
 
         <ImageView
@@ -37,8 +39,123 @@
             android:src="@drawable/ic_search_black" />
 
     </LinearLayout>
-    <WebView
-        android:id="@+id/wv_content"
+
+    <LinearLayout
+        android:id="@+id/ll_tip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:orientation="vertical">
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/ic_yct" />
+        <TextView
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:text="请输入羊城通号码"/>
+    </LinearLayout>
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/contentPanel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="15dp"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/tv_name_yct_id"
+                style="@style/TextAppearance.AppCompat.Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="10dp"
+                android:text="羊城卡号:   "
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/tv_yct_id"
+                style="@style/TextAppearance.AppCompat.Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/tv_name_yct_id"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/tv_name_blance"
+                style="@style/TextAppearance.AppCompat.Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_name_yct_id"
+                android:paddingBottom="10dp"
+                android:text="余额 (元):   "
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/tv_balance"
+                style="@style/TextAppearance.AppCompat.Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_name_yct_id"
+                android:layout_toRightOf="@id/tv_name_blance"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/tv_name_times"
+                style="@style/TextAppearance.AppCompat.Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_name_blance"
+                android:paddingBottom="10dp"
+                android:text="当月乘车次数:   "
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/tv_times"
+                style="@style/TextAppearance.AppCompat.Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_name_blance"
+                android:layout_toRightOf="@id/tv_name_times"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/tv_name_end_dt"
+                style="@style/TextAppearance.AppCompat.Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_name_times"
+                android:paddingBottom="10dp"
+                android:text="数据截止时间:   "
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/tv_end_dt"
+                style="@style/TextAppearance.AppCompat.Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_name_times"
+                android:layout_toRightOf="@id/tv_name_end_dt"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_name_end_dt"
+                android:layout_marginTop="20dp"
+                android:text="重要提示: 因数据上传有时延, 查询数据结果为数据截止时间余额, 信息仅供参考"
+                android:textColor="@color/white" />
+
+        </RelativeLayout>
+
+
+    </ScrollView>
 </LinearLayout>

@@ -6,6 +6,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -24,6 +25,7 @@ public class BusListFragment extends BaseFragment implements BusListContract.Vie
     private BusListAdapter mAdapter;
     private RecyclerView mRecyclerView;
     private ImageView mRefreshIv;
+    private boolean mIsRefreshing;
 
     private static final String sKeyId = "bus_id";
 
@@ -59,6 +61,16 @@ public class BusListFragment extends BaseFragment implements BusListContract.Vie
         final LinearLayoutManager manager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(manager);
         mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (mIsRefreshing) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        });
 
         final SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout)root.findViewById(R.id.refresh_layout);
         swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_light, android.R.color.holo_red_light, android.R.color.holo_orange_light, android.R.color.holo_green_light);
@@ -135,14 +147,22 @@ public class BusListFragment extends BaseFragment implements BusListContract.Vie
 
     @Override
     public void showLoading() {
+        if (getView() == null)
+            return;
+
         super.showLoading();
         loading(true);
+        mIsRefreshing = true;
     }
 
     @Override
     public void hideLoading() {
+        if (getView() == null)
+            return;
+
         super.hideLoading();
         loading(false);
+        mIsRefreshing = false;
     }
 
     private void loading(final boolean show) {

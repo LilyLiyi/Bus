@@ -6,8 +6,10 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
@@ -18,6 +20,7 @@ import android.widget.TextView;
 import com.scrat.app.bus.R;
 import com.scrat.app.bus.common.BaseFragment;
 import com.scrat.app.bus.model.BusInfo;
+import com.scrat.app.bus.module.ConfigSharePreferences;
 import com.scrat.app.bus.module.bus.BusListActivity;
 import com.scrat.app.core.common.BaseRecyclerViewAdapter;
 import com.scrat.app.core.common.BaseRecyclerViewHolder;
@@ -41,6 +44,7 @@ public class SearchFragment extends BaseFragment
     private ImageView mSearchIv;
     private EditText mSearchContentEt;
     private MyAdapter mAdapter;
+    private boolean mIsRefreshing;
 
     @Nullable
     @Override
@@ -51,6 +55,10 @@ public class SearchFragment extends BaseFragment
         View root = inflater.inflate(R.layout.frg_search, container, false);
         mSearchIv = (ImageView) root.findViewById(R.id.iv_search);
         mSearchContentEt = (EditText) root.findViewById(R.id.et_search);
+        String busName = ConfigSharePreferences.getInstance().getLastSearchBusName();
+        if (!TextUtils.isEmpty(busName)) {
+            mSearchContentEt.setText(busName);
+        }
         RecyclerView resultListRv = (RecyclerView) root.findViewById(R.id.rv_list);
         final LinearLayoutManager manager = new LinearLayoutManager(getActivity());
         resultListRv.setLayoutManager(manager);
@@ -58,10 +66,21 @@ public class SearchFragment extends BaseFragment
         mAdapter = new MyAdapter(new OnItemClickListener() {
             @Override
             public void onItemSelected(String busId, String busName) {
+                ConfigSharePreferences.getInstance().setLastSearchBusName(busName);
                 BusListActivity.show(activity, busId, busName);
             }
         });
         resultListRv.setAdapter(mAdapter);
+        resultListRv.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (mIsRefreshing) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        });
 
         mSearchIv.setOnClickListener(this);
         mPresenter = new SearchPresenter(this);
@@ -149,6 +168,7 @@ public class SearchFragment extends BaseFragment
         mAdapter.setList(busInfos);
         if (totalResult == 1 && getContext() != null) {
             BusInfo info = busInfos.get(0);
+            ConfigSharePreferences.getInstance().setLastSearchBusName(info.getBusName());
             BusListActivity.show(getContext(), info.getBusId(), info.getBusName());
         }
     }
@@ -212,6 +232,7 @@ public class SearchFragment extends BaseFragment
 
         super.showLoading();
         loading(true);
+        mIsRefreshing = true;
     }
 
     @Override
@@ -221,6 +242,7 @@ public class SearchFragment extends BaseFragment
 
         super.hideLoading();
         loading(false);
+        mIsRefreshing = false;
     }
 
     private void loading(final boolean show) {
