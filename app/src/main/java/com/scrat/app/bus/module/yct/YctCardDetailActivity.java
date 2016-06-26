@@ -128,10 +128,12 @@ public class YctCardDetailActivity extends BaseActivity implements View.OnClickL
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            try {
-                isodep.close();
-            } catch (IOException e) {
-                e.printStackTrace();
+            if (isodep != null) {
+                try {
+                    isodep.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
