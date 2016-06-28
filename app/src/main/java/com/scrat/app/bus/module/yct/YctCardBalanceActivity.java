@@ -15,12 +15,9 @@ import android.widget.TextView;
 import com.scrat.app.bus.R;
 import com.scrat.app.bus.common.BaseActivity;
 import com.scrat.app.bus.module.ConfigSharePreferences;
+import com.scrat.app.core.net.OkHttpHelper;
 import com.scrat.app.core.utils.ActivityUtils;
 import com.scrat.app.core.utils.NetUtil;
-
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.select.Elements;
 
 /**
  * Created by yixuanxuan on 16/6/1.
@@ -39,7 +36,7 @@ public class YctCardBalanceActivity extends BaseActivity implements View.OnClick
     private ImageView mSearchIv;
     private ImageView mBackIv;
     private ProgressDialog mProgressBar;
-    private AsyncTask<Boolean, String, Boolean> mTask;
+    private AsyncTask<Void, Void, YctWechatDetail> mTask;
 
     private TextView mYctIdTv;
     private TextView mBalancdTv;
@@ -61,18 +58,35 @@ public class YctCardBalanceActivity extends BaseActivity implements View.OnClick
         mTimesTv = (TextView) findViewById(R.id.tv_times);
         mEndDtTv = (TextView) findViewById(R.id.tv_end_dt);
 
-        mProgressBar = ProgressDialog.show(YctCardBalanceActivity.this, "羊城通余额", "正在查询...");
-
         String cardId = getIntent().getStringExtra(sExtraKey);
         if (TextUtils.isEmpty(cardId)) {
             cardId = ConfigSharePreferences.getInstance().getCardId();
         }
         if (!TextUtils.isEmpty(cardId)) {
             mSearchEt.setText(cardId);
-            showContent(cardId);
-        } else {
-            mProgressBar.dismiss();
+            if (NetUtil.isNetworkAvailable()) {
+                showContent(cardId);
+            } else {
+                onNoNetworkError();
+            }
         }
+    }
+
+    @Override
+    public void showLoading() {
+        if (mProgressBar == null) {
+            mProgressBar = ProgressDialog.show(YctCardBalanceActivity.this, "羊城通余额", "正在查询...");
+        } else {
+            mProgressBar.show();
+        }
+    }
+
+    @Override
+    public void hideLoading() {
+        if (mProgressBar == null)
+            return;
+
+        mProgressBar.dismiss();
     }
 
     @Override
@@ -81,6 +95,55 @@ public class YctCardBalanceActivity extends BaseActivity implements View.OnClick
             mTask.cancel(false);
         }
         super.onDestroy();
+    }
+
+    private static class YctWechatDetail {
+        private String cardId;
+        private String endDt;
+        private String balance;
+        private String times;
+
+        public String getCardId() {
+            return cardId;
+        }
+
+        public void setCardId(String cardId) {
+            this.cardId = cardId;
+        }
+
+        public String getEndDt() {
+            return endDt;
+        }
+
+        public void setEndDt(String endDt) {
+            this.endDt = endDt;
+        }
+
+        public String getBalance() {
+            return balance;
+        }
+
+        public void setBalance(String balance) {
+            this.balance = balance;
+        }
+
+        public String getTimes() {
+            return times;
+        }
+
+        public void setTimes(String times) {
+            this.times = times;
+        }
+
+        @Override
+        public String toString() {
+            return "YctWechatDetail{" +
+                    "cardId='" + cardId + '\'' +
+                    ", endDt='" + endDt + '\'' +
+                    ", balance='" + balance + '\'' +
+                    ", times='" + times + '\'' +
+                    '}';
+        }
     }
 
     private void showContent(final String cardId) {
@@ -95,7 +158,7 @@ public class YctCardBalanceActivity extends BaseActivity implements View.OnClick
             return;
         }
 
-        mTask = new AsyncTask<Boolean, String, Boolean>() {
+        mTask = new AsyncTask<Void, Void, YctWechatDetail>() {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
@@ -105,64 +168,57 @@ public class YctCardBalanceActivity extends BaseActivity implements View.OnClick
                 mYctIdTv.setText("");
                 mBalancdTv.setText("");
                 mEndDtTv.setText("");
-                mProgressBar.show();
+                showLoading();
             }
 
             @Override
-            protected void onProgressUpdate(String... values) {
-                super.onProgressUpdate(values);
-                if (values == null || values.length != 2)
-                    return;
-
-                String key = values[0];
-                String content = values[1];
-                if (key.contains("羊")) {
-                    // 羊城通卡号
-                    mYctIdTv.setText(content);
-                } else if (key.contains("据")) {
-                    // 数据截止时间
-                    mEndDtTv.setText(content);
-                } else if (key.contains("余")) {
-                    // 余额（元）
-                    mBalancdTv.setText(content);
-                } else if (key.contains("当")) {
-                    mTimesTv.setText(content);
-                }
-            }
-
-            @Override
-            protected Boolean doInBackground(Boolean... params) {
+            protected YctWechatDetail doInBackground(Void... params) {
+                String head = "<table class=\"btn-blue\" width=\"100%\">";
+                String botton = "</table>";
+                YctWechatDetail detail = new YctWechatDetail();
                 try {
-                    Document doc = Jsoup.connect(url).get();
-                    Elements trs = doc.select("table").select("tr");
-                    int totalTr = trs.size();
-                    if (totalTr == 0)
-                        return Boolean.FALSE;
-
-                    for (int i = 0; i < totalTr; i++) {
-                        Elements tds = trs.get(i).select("td");
-                        if (tds.size() != 2) {
+                    String content = OkHttpHelper.getInstance().get(url);
+                    content = content.substring(content.indexOf(head) + head.length(), content.indexOf(botton) - botton.length()).replaceAll("[\\t\\n\\r]", "");
+                    String[] datas = content.split("</tr><tr>");
+                    for (String data : datas) {
+                        String[] cols = data.split("</td><td>");
+                        if (cols.length != 2) {
                             continue;
                         }
 
-                        String key = tds.get(0).text();
-                        String content = tds.get(1).text();
-                        publishProgress(key, content);
+                        String key = cols[0];
+                        String value = cols[1].replace("</td>", "");
+                        if (key.contains("羊")) {
+                            // 羊城通卡号
+                            detail.setCardId(value);
+                        } else if (key.contains("据")) {
+                            // 数据截止时间
+                            detail.setEndDt(value);
+                        } else if (key.contains("余")) {
+                            // 余额（元）
+                            detail.setBalance(value);
+                        } else if (key.contains("当")) {
+                            detail.setTimes(value);
+                        }
                     }
-                    return Boolean.TRUE;
                 } catch (Exception e) {
                     e.printStackTrace();
+                    return null;
                 }
-                return null;
+                return detail;
             }
 
             @Override
-            protected void onPostExecute(Boolean aBoolean) {
-                super.onPostExecute(aBoolean);
-                mProgressBar.dismiss();
-                if (aBoolean == null || !aBoolean) {
+            protected void onPostExecute(YctWechatDetail detail) {
+                super.onPostExecute(detail);
+                hideLoading();
+                if (detail == null) {
                     showToask("服务器有点抽风, 请重试...");
                 } else {
+                    mYctIdTv.setText(detail.getCardId());
+                    mEndDtTv.setText(detail.getEndDt());
+                    mBalancdTv.setText(detail.getBalance());
+                    mTimesTv.setText(detail.getTimes());
                     findViewById(R.id.contentPanel).setVisibility(View.VISIBLE);
                     findViewById(R.id.ll_tip).setVisibility(View.GONE);
                     ConfigSharePreferences.getInstance().setCardId(cardId);
@@ -178,6 +234,11 @@ public class YctCardBalanceActivity extends BaseActivity implements View.OnClick
             String content = mSearchEt.getText().toString();
             if (TextUtils.isEmpty(content)) {
                 showToask("请输入正确的羊城通卡号");
+                return;
+            }
+
+            if (!NetUtil.isNetworkAvailable()) {
+                onNoNetworkError();
                 return;
             }
 
