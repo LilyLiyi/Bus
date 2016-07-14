@@ -16,11 +16,13 @@
     <string name="yct">羊城通</string>
     <string name="realtime_bus">实时公交</string>
     <string name="more">更多</string>
-    <string name="feedback">反馈</string>
     <string name="nav_header_subtitle">实时公交查询工具</string>
     <string name="nfc_note">请把羊城通贴近手机背面\n(确保系统设置中已开启NFC)</string>
     <string name="yct_number">&#160;羊城通号码</string>
     <string name="yct_balance">查看余额</string>
     <string name="no_bus_online">似乎公交师傅都下班了!</string>
+
+    <string name="setting">设置</string>
+    <string name="feedback">反馈</string>
 
 </resources>
