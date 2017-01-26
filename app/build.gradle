@@ -20,7 +20,10 @@ android {
             debuggable false
             jniDebuggable false
             renderscriptDebuggable false
-            signingConfig signingConfigs.config
+            try {
+                signingConfig signingConfigs.config
+            } catch (ignore) {
+            }
         }
     }
 
