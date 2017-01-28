@@ -41,6 +41,11 @@
         </activity>
 
         <activity
+            android:name=".module.search.SearchBusActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
             android:name=".module.bus.BusListActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />

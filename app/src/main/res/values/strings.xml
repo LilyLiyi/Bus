@@ -9,7 +9,7 @@
     <string name="search_result">共搜索出 %1$d 条结果</string>
     <string name="no_result">没有找到数据</string>
     <string name="no_net_error">当前没有可用网络, 请连接网络后重试</string>
-    <string name="search_text">&#160;请输入公交路线,&#160;如:777</string>
+    <string name="search_text">如:777</string>
     <string name="search_content_required">请输入搜索内容</string>
     <string name="unknown">未知</string>
     <string name="guang_zhou">广州</string>
@@ -22,5 +22,11 @@
     <string name="yct_number">&#160;羊城通号码</string>
     <string name="yct_balance">查看余额</string>
     <string name="no_bus_online">似乎公交师傅都下班了!</string>
+    <string name="loading">加载中…</string>
+    <string name="search">搜索</string>
+    <string name="start">起</string>
+    <string name="end">终</string>
+    <string name="bus_search">公交搜索</string>
+    <string name="search_history">搜索历史</string>
 
 </resources>

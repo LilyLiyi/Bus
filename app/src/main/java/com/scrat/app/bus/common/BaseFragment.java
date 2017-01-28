@@ -36,8 +36,4 @@ public abstract class BaseFragment extends Fragment implements BaseView {
         showMsg(getString(R.string.no_net_error));
     }
 
-    @Override
-    public void onTokenError() {
-
-    }
 }

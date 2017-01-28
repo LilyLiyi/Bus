@@ -23,7 +23,6 @@ import java.util.List;
 public class BusListFragment extends BaseFragment implements BusListContract.View, View.OnClickListener {
     private BusListContract.Presenter mPresenter;
     private BusListAdapter mAdapter;
-    private RecyclerView mRecyclerView;
     private ImageView mRefreshIv;
     private boolean mIsRefreshing;
 
@@ -57,11 +56,11 @@ public class BusListFragment extends BaseFragment implements BusListContract.Vie
         mRefreshIv = (ImageView) root.findViewById(R.id.iv_refresh);
         mRefreshIv.getBackground().setAlpha(100);
         mRefreshIv.setOnClickListener(this);
-        mRecyclerView = (RecyclerView) root.findViewById(R.id.rv_list);
+        RecyclerView recyclerView = (RecyclerView) root.findViewById(R.id.rv_list);
         final LinearLayoutManager manager = new LinearLayoutManager(getActivity());
-        mRecyclerView.setLayoutManager(manager);
-        mRecyclerView.setAdapter(mAdapter);
-        mRecyclerView.setOnTouchListener(new View.OnTouchListener() {
+        recyclerView.setLayoutManager(manager);
+        recyclerView.setAdapter(mAdapter);
+        recyclerView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (mIsRefreshing) {
@@ -81,7 +80,7 @@ public class BusListFragment extends BaseFragment implements BusListContract.Vie
             }
         });
 
-        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener(){
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener(){
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 int topRowVerticalPosition =

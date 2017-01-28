@@ -8,6 +8,7 @@ import java.util.List;
 /**
  * Created by yixuanxuan on 16/5/14.
  */
+@Deprecated
 public abstract class BaseRecyclerViewAdapter<Item, Holder extends BaseRecyclerViewHolder> extends RecyclerView.Adapter<Holder> {
 
     protected abstract Holder onCreateRecycleItemView(ViewGroup parent, int viewType);

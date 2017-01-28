@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
 import okhttp3.MediaType;
@@ -173,12 +174,14 @@ public class OkHttpHelper {
         return post(url, null);
     }
 
-    public void post(String url, Map<String, String> params, Map<String, String> headers, Callback responseCallback)
+    public Call post(String url, Map<String, String> params, Map<String, String> headers, Callback responseCallback)
             throws UnsupportedEncodingException {
         L.d("url %s", url);
         L.d("post %s", params);
         Request request = buildPostFormRequest(url, headers, params);
-        client.newCall(request).enqueue(responseCallback);
+        Call call = client.newCall(request);
+        call.enqueue(responseCallback);
+        return call;
     }
 
     public String get(String url, Map<String, String> params)

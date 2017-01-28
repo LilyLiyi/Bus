@@ -36,11 +36,6 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
         Snackbar.make(getWindow().getDecorView(), "当前没有可用网络", Snackbar.LENGTH_LONG).show();
     }
 
-    @Override
-    public void onTokenError() {
-
-    }
-
     public void showToask(String content) {
         Snackbar.make(getWindow().getDecorView(), content, Snackbar.LENGTH_LONG).show();
     }

@@ -6,6 +6,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
+import okhttp3.Call;
 import okhttp3.Callback;
 
 /**
@@ -29,8 +30,7 @@ public class NetApi {
     private static final String sCookie =
             "realOpenId=ouz9MsyNIpeYEMJEhI7E-peH3oOk; openId=ouz9MsyNIpeYEMJEhI7E-peH3oOk";
 
-    public static void getBusInfo(String busNo, Callback responseCallback) {
-
+    public static Call getBusInfo(String busNo, Callback responseCallback) {
         Map<String, String> params = new OkHttpHelper.ParamsBuilder().put(sKeyName, busNo).build();
 
         Map<String, String> headers = new HashMap<>();
@@ -38,10 +38,11 @@ public class NetApi {
         headers.put(sKeyCookie, sCookie);
 
         try {
-            OkHttpHelper.getInstance().post(sUrlGetBusName, params, headers, responseCallback);
+            return OkHttpHelper.getInstance().post(sUrlGetBusName, params, headers, responseCallback);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
             responseCallback.onFailure(null, e);
+            return null;
         }
     }
 

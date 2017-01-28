@@ -19,4 +19,14 @@ public interface SearchContract {
         void onSearchError();
         void onContentEmptyError();
     }
+
+    interface SearchView {
+        void setPresenter(Presenter presenter);
+
+        void onEmptyResult();
+        void onSearchContentEmptyError();
+        void onSearching();
+        void onSearchFail(String msg);
+        void onSearchSuccess(List<BusInfo> list);
+    }
 }

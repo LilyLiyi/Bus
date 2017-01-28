@@ -9,6 +9,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -32,8 +33,7 @@ public class SearchActivity extends BaseActivity implements NavigationView.OnNav
         setSupportActionBar(toolbar);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         if (drawer != null) {
             drawer.addDrawerListener(toggle);
             drawer.addDrawerListener(new DrawerLayout.DrawerListener() {
@@ -65,9 +65,24 @@ public class SearchActivity extends BaseActivity implements NavigationView.OnNav
 
         if (mFragment == null) {
             mFragment = SearchFragment.newInstance();
-            ActivityUtils.addFragmentToActivity(
-                    getSupportFragmentManager(), mFragment, R.id.contentFrame);
+            ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), mFragment, R.id.contentFrame);
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.search:
+                SearchBusActivity.show(this);
+                break;
+        }
+        return true;
     }
 
     @Override
@@ -101,11 +116,16 @@ public class SearchActivity extends BaseActivity implements NavigationView.OnNav
     }
 
     private void sendFeedback() {
-        Intent data = new Intent(Intent.ACTION_SENDTO);
-        data.setData(Uri.parse("mailto:huzhenjie.dev@gmail.com"));
-        data.putExtra(Intent.EXTRA_SUBJECT, "[广州公交][" + System.currentTimeMillis() + "]");
-        data.putExtra(Intent.EXTRA_TEXT, "请输入您的反馈内容");
-        startActivity(data);
+        try {
+            Intent data = new Intent(Intent.ACTION_SENDTO);
+            data.setData(Uri.parse("mailto:huzhenjie.dev@gmail.com"));
+            data.putExtra(Intent.EXTRA_SUBJECT, "[广州公交][" + System.currentTimeMillis() + "]");
+            data.putExtra(Intent.EXTRA_TEXT, "请输入您的反馈内容");
+            startActivity(data);
+        } catch (Exception ignore) {
+
+        }
+
     }
 
 }
