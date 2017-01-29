@@ -35,7 +35,6 @@ public class YctCardDetailActivity extends BaseActivity implements View.OnClickL
     private NfcAdapter mNfcAdapter;
     private PendingIntent mPendingIntent;
     private TextView mCardIdTv;
-    private RecyclerView mRecyclerView;
     private Button mBalanceBtn;
     private MyAdapter mAdapter;
     private ImageView mBackIv;
@@ -55,11 +54,11 @@ public class YctCardDetailActivity extends BaseActivity implements View.OnClickL
         mBackIv = (ImageView) findViewById(R.id.iv_back);
         mBackIv.setOnClickListener(this);
 
-        mRecyclerView = (RecyclerView) findViewById(R.id.rv_list);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rv_list);
         final LinearLayoutManager manager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(manager);
+        recyclerView.setLayoutManager(manager);
         mAdapter = new MyAdapter();
-        mRecyclerView.setAdapter(mAdapter);
+        recyclerView.setAdapter(mAdapter);
         loadData(getIntent());
     }
 

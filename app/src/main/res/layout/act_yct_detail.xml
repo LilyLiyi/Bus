@@ -13,6 +13,7 @@
             android:id="@+id/iv_back"
             android:layout_width="wrap_content"
             android:layout_height="?attr/actionBarSize"
+            android:contentDescription="@null"
             android:paddingLeft="15dp"
             android:paddingRight="25dp"
             android:src="@drawable/ic_back_white" />
@@ -22,6 +23,7 @@
             android:layout_height="100dp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
+            android:contentDescription="@null"
             android:src="@drawable/ic_yct" />
     </RelativeLayout>
 
@@ -59,9 +61,9 @@
             style="@style/TextAppearance.AppCompat.Title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
             android:layout_gravity="center"
-            android:text="@string/nfc_note" />
+            android:text="@string/nfc_note"
+            android:textColor="@color/white" />
     </FrameLayout>
 
 

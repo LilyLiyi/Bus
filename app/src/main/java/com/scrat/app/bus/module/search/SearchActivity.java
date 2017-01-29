@@ -89,9 +89,7 @@ public class SearchActivity extends BaseActivity implements NavigationView.OnNav
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.nav_bus) {
-
-        } else if (id == R.id.nav_send) {
+        if (id == R.id.nav_send) {
             sendFeedback();
         } else if (id == R.id.nav_yct) {
             Intent i = new Intent(this, YctCardDetailActivity.class);

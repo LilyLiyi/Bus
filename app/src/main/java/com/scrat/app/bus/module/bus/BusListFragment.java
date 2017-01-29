@@ -63,11 +63,7 @@ public class BusListFragment extends BaseFragment implements BusListContract.Vie
         recyclerView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if (mIsRefreshing) {
-                    return true;
-                } else {
-                    return false;
-                }
+                return mIsRefreshing;
             }
         });
 

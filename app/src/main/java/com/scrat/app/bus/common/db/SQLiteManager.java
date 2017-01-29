@@ -67,18 +67,18 @@ public class SQLiteManager extends SQLiteOpenHelper {
      * DAO表接口
      */
     public interface SQLiteTable {
-        public static final String DESC = "DESC";
-        public static final String ASC = "ASC";
-        public static final String INTEGER_PRIMARY_KEY = "INTEGER PRIMARY KEY";
-        public static final String FLOAT = "FLOAT";
-        public static final String TEXT = "TEXT";
-        public static final String INT = "INT";
-        public static final String LONG = "LONG";
-        public static final String UNIQUE = "UNIQUE";
+        String DESC = "DESC";
+        String ASC = "ASC";
+        String INTEGER_PRIMARY_KEY = "INTEGER PRIMARY KEY";
+        String FLOAT = "FLOAT";
+        String TEXT = "TEXT";
+        String INT = "INT";
+        String LONG = "LONG";
+        String UNIQUE = "UNIQUE";
 
-        public void onCreate(SQLiteDatabase database);
+        void onCreate(SQLiteDatabase database);
 
-        public void onUpdate(SQLiteDatabase database, int oldVersion, int newVersion);
+        void onUpdate(SQLiteDatabase database, int oldVersion, int newVersion);
     }
 
 }

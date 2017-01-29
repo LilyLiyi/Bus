@@ -65,8 +65,7 @@ public class Utils {
 
     public static boolean phoneNumValid(String mobiles) {
         String telRegex = "[1][358]\\d{9}";
-        if (TextUtils.isEmpty(mobiles)) return false;
-        else return mobiles.matches(telRegex);
+        return !TextUtils.isEmpty(mobiles) && mobiles.matches(telRegex);
     }
 
     public static boolean personIdValidation(String text) {
@@ -87,15 +86,6 @@ public class Utils {
         } finally {
             IoUtil.close(bos);
         }
-    }
-
-    public static boolean isX86CPU() {
-        return "x86".equals(android.os.Build.CPU_ABI);
-    }
-
-    public static boolean isPad(Context context) {
-        return (context.getResources().getConfiguration().screenLayout
-                & Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_LARGE;
     }
 
     public static String getAndroidID(Context context) {

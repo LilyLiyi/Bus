@@ -10,6 +10,7 @@
         android:id="@+id/ic_curr_stop"
         android:layout_width="30dp"
         android:layout_height="30dp"
+        android:contentDescription="@null"
         android:src="@drawable/ic_menu_bus_blue" />
 
     <TextView
@@ -32,6 +33,7 @@
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_below="@id/ic_curr_stop"
+        android:contentDescription="@null"
         android:src="@drawable/ic_menu_bus_blue" />
 
 </RelativeLayout>

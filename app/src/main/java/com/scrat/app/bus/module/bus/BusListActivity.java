@@ -16,7 +16,6 @@ import com.scrat.app.core.utils.ActivityUtils;
  */
 public class BusListActivity extends BaseActivity {
     private BusListFragment mFragment;
-    private Toolbar mToolbar;
 
     private static final String sExtraKeyBusId = "bus_id";
     private static final String sExtraKeyBusName = "bus_name";
@@ -33,26 +32,20 @@ public class BusListActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_base);
 
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-//            // 透明状态栏
-//            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-//            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-//        }
-
-        mToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.my_toolbar);
 
         if (mFragment == null) {
             String busId = getIntent().getStringExtra(sExtraKeyBusId);
             String busName = getIntent().getStringExtra(sExtraKeyBusName);
-            mToolbar.setTitle(busName);
+            toolbar.setTitle(busName);
             mFragment = BusListFragment.newInstance(busId);
             ActivityUtils.addFragmentToActivity(
                     getSupportFragmentManager(), mFragment, R.id.contentFrame);
         }
 
-        setSupportActionBar(mToolbar);
+        setSupportActionBar(toolbar);
 
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();

@@ -293,11 +293,11 @@ public abstract class BaseDao<T> implements SQLiteManager.SQLiteTable {
     }
 
     public interface RowMapper<T> {
-        public void map(T t, int index);
+        void map(T t, int index);
     }
 
     public interface OnEachListener<T> {
-        public void onEach(T t);
+        void onEach(T t);
     }
 
     /**

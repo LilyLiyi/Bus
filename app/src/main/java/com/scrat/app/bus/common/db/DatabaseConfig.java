@@ -12,15 +12,15 @@ public interface DatabaseConfig {
     /**
      * 获取数据库名
      */
-    public String getDatabaseName();
+    String getDatabaseName();
 
     /**
      * 获取数据库版本号
      */
-    public int getDatabaseVersion();
+    int getDatabaseVersion();
 
     /**
      * 获取数据库库中所有表的类
      */
-    public List<Class<? extends SQLiteManager.SQLiteTable>> getTables(Context context);
+    List<Class<? extends SQLiteManager.SQLiteTable>> getTables(Context context);
 }

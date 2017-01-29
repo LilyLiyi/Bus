@@ -17,6 +17,7 @@
             android:id="@+id/iv_back"
             android:layout_width="wrap_content"
             android:layout_height="?attr/actionBarSize"
+            android:contentDescription="@null"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:src="@drawable/ic_back_black" />
@@ -36,6 +37,7 @@
             android:id="@+id/iv_search"
             android:layout_width="wrap_content"
             android:layout_height="?attr/actionBarSize"
+            android:contentDescription="@null"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
             android:src="@drawable/ic_search_black" />
@@ -48,17 +50,20 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:orientation="vertical">
+
         <ImageView
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_gravity="center_horizontal"
+            android:contentDescription="@null"
             android:src="@drawable/ic_yct" />
+
         <TextView
-            android:layout_gravity="center_horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:text="请输入羊城通号码"/>
+            android:layout_gravity="center_horizontal"
+            android:text="请输入羊城通号码"
+            android:textColor="@color/white" />
     </LinearLayout>
 
     <ScrollView

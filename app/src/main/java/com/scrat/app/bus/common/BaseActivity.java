@@ -9,6 +9,7 @@ import com.umeng.analytics.MobclickAgent;
 /**
  * Created by yixuanxuan on 16/5/12.
  */
+@Deprecated
 public abstract class BaseActivity extends AppCompatActivity implements BaseView {
 
     public void onResume() {
