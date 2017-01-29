@@ -96,7 +96,11 @@ public class YctCardDetailActivity extends BaseActivity implements View.OnClickL
     public void onPause() {
         super.onPause();
         if (mNfcAdapter != null) {
-            mNfcAdapter.disableForegroundDispatch(this);
+            try {
+                mNfcAdapter.disableForegroundDispatch(this);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
