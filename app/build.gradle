@@ -73,7 +73,14 @@ android {
     android.applicationVariants.all { variant ->
         variant.outputs.each { output ->
             def file = output.outputFile
-            output.outputFile = new File(file.parent, file.name.replace(".apk", "-" + defaultConfig.versionName + ".apk"))
+            def stdout = new ByteArrayOutputStream()
+            exec {
+                commandLine 'git', 'describe', '--abbrev=0', '--tags'
+                standardOutput = stdout
+            }
+
+            def vn = stdout.toString().trim()
+            output.outputFile = new File(file.parent, file.name.replace(".apk", "-" + vn + ".apk"))
         }
     }
 
