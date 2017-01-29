@@ -1,4 +1,4 @@
-package com.scrat.app.core.utils;
+package com.scrat.app.bus.utils;
 
 import android.database.Cursor;
 

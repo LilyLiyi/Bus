@@ -9,7 +9,7 @@ import android.view.View;
 
 import com.scrat.app.bus.R;
 import com.scrat.app.bus.common.BaseActivity;
-import com.scrat.app.core.utils.ActivityUtils;
+import com.scrat.app.bus.utils.ActivityUtils;
 
 /**
  * Created by yixuanxuan on 16/5/20.

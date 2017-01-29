@@ -4,7 +4,7 @@ import android.nfc.tech.IsoDep;
 
 import com.scrat.app.bus.model.NfcCardInfo;
 import com.scrat.app.bus.model.NfcCardLog;
-import com.scrat.app.core.utils.Utils;
+import com.scrat.app.bus.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.Arrays;

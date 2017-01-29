@@ -1,4 +1,4 @@
-package com.scrat.app.core.view;
+package com.scrat.app.bus.view;
 
 import android.content.Context;
 import android.support.v4.view.ViewCompat;

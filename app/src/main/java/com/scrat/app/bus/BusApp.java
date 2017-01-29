@@ -4,8 +4,7 @@ import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
 
-import com.scrat.app.core.CommonContext;
-import com.scrat.app.core.utils.Utils;
+import com.scrat.app.bus.utils.Utils;
 import com.xiaomi.mipush.sdk.MiPushClient;
 
 import java.util.List;
@@ -27,7 +26,6 @@ public class BusApp extends Application {
     public void onCreate() {
         super.onCreate();
         mContext = this;
-        CommonContext.initContext(mContext);
         if (shouldInit()) {
             MiPushClient.registerPush(this, APP_ID, APP_KEY);
             String alias = Utils.getAndroidID(mContext);

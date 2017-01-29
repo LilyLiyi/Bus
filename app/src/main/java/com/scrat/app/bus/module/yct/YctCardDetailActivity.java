@@ -23,8 +23,8 @@ import com.scrat.app.bus.R;
 import com.scrat.app.bus.common.BaseActivity;
 import com.scrat.app.bus.model.NfcCardInfo;
 import com.scrat.app.bus.model.NfcCardLog;
-import com.scrat.app.core.common.BaseRecyclerViewAdapter;
-import com.scrat.app.core.common.BaseRecyclerViewHolder;
+import com.scrat.app.bus.common.BaseRecyclerViewAdapter;
+import com.scrat.app.bus.common.BaseRecyclerViewHolder;
 
 import java.io.IOException;
 

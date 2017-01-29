@@ -1,4 +1,4 @@
-package com.scrat.app.core.common;
+package com.scrat.app.bus.common;
 
 /**
  * Created by yixuanxuan on 16/4/29.
@@ -6,5 +6,4 @@ package com.scrat.app.core.common;
 public interface BaseView {
     void showLoading();
     void hideLoading();
-    void onNoNetworkError();
 }

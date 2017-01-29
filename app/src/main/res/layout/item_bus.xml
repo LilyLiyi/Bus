@@ -20,7 +20,7 @@
         android:layout_marginLeft="10dp"
         android:layout_toRightOf="@id/ic_curr_stop"
         android:gravity="center_vertical"
-        android:textColor="@color/black" />
+        android:textColor="@android:color/black" />
 
     <View
         android:layout_width="fill_parent"

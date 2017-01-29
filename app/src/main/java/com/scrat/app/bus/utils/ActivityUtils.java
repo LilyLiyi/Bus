@@ -1,4 +1,4 @@
-package com.scrat.app.core.utils;
+package com.scrat.app.bus.utils;
 
 import android.app.Activity;
 import android.content.Context;

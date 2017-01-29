@@ -104,7 +104,11 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
-    compile project(':core')
+    compile 'com.android.support:appcompat-v7:23.2.1'
+    compile 'com.android.support:design:23.2.1'
+
+    compile 'com.squareup.okhttp3:okhttp:3.2.0'
+    compile 'com.google.code.gson:gson:2.6.2'
     compile 'com.umeng.analytics:analytics:latest.integration'
     compile files('libs/MiPush_SDK_Client_2_2_21.jar')
     compile 'org.jsoup:jsoup:1.9.2'

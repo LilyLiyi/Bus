@@ -1,7 +1,5 @@
 package com.scrat.app.bus.net;
 
-import com.scrat.app.core.net.OkHttpHelper;
-
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;

@@ -1,27 +1,21 @@
-package com.scrat.app.core.net;
+package com.scrat.app.bus.net;
 
 import android.text.TextUtils;
 
-import com.scrat.app.core.utils.L;
-import com.scrat.app.core.utils.NetUtil;
+import com.scrat.app.bus.utils.L;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.net.FileNameMap;
-import java.net.URLConnection;
 import java.net.URLEncoder;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
 import okhttp3.MediaType;
-import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -45,9 +39,7 @@ public class OkHttpHelper {
         client = new OkHttpClient();
     }
 
-    private Request buildPostFormRequest(String url, Map<String, String> headers, Map<String, String> params)
-            throws UnsupportedEncodingException {
-
+    private Request buildPostFormRequest(String url, Map<String, String> headers, Map<String, String> params) throws UnsupportedEncodingException {
         FormBody.Builder builder = new FormBody.Builder();
         if (!isEmpty(params)) {
             for (Map.Entry<String, String> entry : params.entrySet()) {
@@ -67,9 +59,7 @@ public class OkHttpHelper {
         return reqBuilder.build();
     }
 
-    private Request buildGetFormRequest(
-            String url, Map<String, String> headers, Map<String, String> params)
-            throws UnsupportedEncodingException {
+    private Request buildGetFormRequest(String url, Map<String, String> headers, Map<String, String> params) throws UnsupportedEncodingException {
         if (!isEmpty(params)) {
             StringBuilder sb = new StringBuilder(url);
             sb.append('?');
@@ -86,42 +76,6 @@ public class OkHttpHelper {
             }
         }
         return builder.build();
-    }
-
-    private Request buildMultipartFormRequest(
-            String url, Map<String, File> files, Map<String, String> params) {
-
-        MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
-        if (!isEmpty(params)) {
-            for (Map.Entry<String, String> entry : params.entrySet()) {
-                String key = entry.getKey();
-                String value = entry.getValue();
-                builder.addFormDataPart(key, value);
-            }
-        }
-
-        if (!isEmpty(files)) {
-            for (Map.Entry<String, File> entry : files.entrySet()) {
-                String key = entry.getKey();
-                File file = files.get(key);
-                String fileName = file.getName();
-                RequestBody fileBody =
-                        RequestBody.create(MediaType.parse(guessMimeType(fileName)), file);
-                builder.addFormDataPart(key, fileName, fileBody);
-            }
-        }
-
-        RequestBody requestBody = builder.build();
-        return new Request.Builder().url(url).post(requestBody).build();
-    }
-
-    private String guessMimeType(String path) {
-        FileNameMap fileNameMap = URLConnection.getFileNameMap();
-        String contentTypeFor = fileNameMap.getContentTypeFor(path);
-        if (contentTypeFor == null) {
-            contentTypeFor = "application/octet-stream";
-        }
-        return contentTypeFor;
     }
 
     private String getResponseBody(Response response) throws IOException {
@@ -150,7 +104,7 @@ public class OkHttpHelper {
                 e.printStackTrace();
                 int totalRequestTimes = i + 1;
                 L.d("retry %s", totalRequestTimes);
-                if (!NetUtil.isNetworkAvailable() || totalRequestTimes == maxRetryTimes) {
+                if (totalRequestTimes == maxRetryTimes) {
                     throw e;
                 }
             }
@@ -159,23 +113,7 @@ public class OkHttpHelper {
         throw new IOException("retry fail");
     }
 
-    public String post(String url, Map<String, String> params) throws IOException {
-        L.d("url %s", url);
-        L.d("post %s", params);
-        Request request = buildPostFormRequest(url, null, params);
-        Response response = getResponse(request);
-        L.d("%s", response.code());
-        String body = getResponseBody(response);
-        L.d("response %s", body);
-        return body;
-    }
-
-    public String post(String url) throws IOException {
-        return post(url, null);
-    }
-
-    public Call post(String url, Map<String, String> params, Map<String, String> headers, Callback responseCallback)
-            throws UnsupportedEncodingException {
+    public Call post(String url, Map<String, String> params, Map<String, String> headers, Callback responseCallback) throws UnsupportedEncodingException {
         L.d("url %s", url);
         L.d("post %s", params);
         Request request = buildPostFormRequest(url, headers, params);
@@ -184,8 +122,7 @@ public class OkHttpHelper {
         return call;
     }
 
-    public String get(String url, Map<String, String> params)
-            throws IOException {
+    public String get(String url, Map<String, String> params) throws IOException {
         L.d("[get] %s", url);
         L.d("[params] %s", params);
         Request request = buildGetFormRequest(url, null, params);
@@ -200,9 +137,7 @@ public class OkHttpHelper {
         return get(url, Collections.<String, String>emptyMap());
     }
 
-    public void get(String url, Map<String, String> params,
-                    Map<String, String> headers, Callback responseCallback)
-            throws UnsupportedEncodingException {
+    public void get(String url, Map<String, String> params, Map<String, String> headers, Callback responseCallback) throws UnsupportedEncodingException {
         L.d("[get] %s", url);
         L.d("[params] %s", params);
         Request request = buildGetFormRequest(url, headers, params);
@@ -215,10 +150,6 @@ public class OkHttpHelper {
 
     private boolean isEmpty(Map<?, ?> map) {
         return map == null || map.size() == 0;
-    }
-
-    private boolean isEmpty(Collection<?> list) {
-        return list == null || list.size() == 0;
     }
 
     public static class ParamsBuilder {
@@ -253,8 +184,7 @@ public class OkHttpHelper {
         }
     }
 
-    public static final MediaType MEDIA_TYPE_MARKDOWN
-            = MediaType.parse("application/xml");
+    private static final MediaType MEDIA_TYPE_MARKDOWN = MediaType.parse("application/xml");
 
     public void put(String url, String path) {
         final File file = new File(path);
@@ -272,45 +202,4 @@ public class OkHttpHelper {
         }
     }
 
-    // this is hack ! Only use for upload feedback.
-    public void uploadToFeedback(
-            String url, String fileKey, List<String> paths, Map<String, String> params,
-            Callback responseCallback) throws IOException {
-
-        MultipartBody.Builder builder = new MultipartBody.Builder()
-                .setType(MultipartBody.FORM);
-
-        if (!isEmpty(paths)) {
-            for (String path : paths) {
-                final File file = new File(path);
-                builder.addFormDataPart(
-                        fileKey, file.getName(), RequestBody.create(MultipartBody.FORM, file));
-            }
-        }
-
-        if (!isEmpty(params)) {
-            for (Map.Entry<String, String> entry : params.entrySet()) {
-                builder.addFormDataPart(entry.getKey(), entry.getValue());
-            }
-        }
-
-        Request request = new Request.Builder()
-                .url(url)
-                .post(builder.build())
-                .build();
-
-        client.newCall(request).enqueue(responseCallback);
-    }
-
-    public void download(String url, DownloadCallback callback) {
-        Request request = new Request.Builder()
-                .url(url)
-                .build();
-
-        client.newCall(request).enqueue(callback);
-    }
-
-    public OkHttpClient getClient() {
-        return client;
-    }
 }

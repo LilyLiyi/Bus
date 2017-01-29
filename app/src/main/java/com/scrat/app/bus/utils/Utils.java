@@ -1,13 +1,12 @@
-package com.scrat.app.core.utils;
+package com.scrat.app.bus.utils;
 
 import android.content.ContentResolver;
 import android.content.Context;
-import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.provider.Settings;
 import android.text.TextUtils;
 
-import com.scrat.app.core.CommonContext;
+import com.scrat.app.bus.BusApp;
 
 import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
@@ -126,8 +125,8 @@ public class Utils {
 
     public static int getVersionCode() {
         try {
-            String pkgName = CommonContext.getContext().getPackageName();
-            return CommonContext.getContext().getPackageManager()
+            String pkgName = BusApp.getContext().getPackageName();
+            return BusApp.getContext().getPackageManager()
                     .getPackageInfo(pkgName, 0).versionCode;
         } catch (Exception e) {
             e.printStackTrace();
@@ -137,8 +136,8 @@ public class Utils {
 
     public static String getVersionName() {
         try {
-            String pkName = CommonContext.getContext().getPackageName();
-            return CommonContext.getContext().getPackageManager()
+            String pkName = BusApp.getContext().getPackageName();
+            return BusApp.getContext().getPackageManager()
                     .getPackageInfo(pkName, 0).versionName;
         } catch (Exception e) {
             e.printStackTrace();

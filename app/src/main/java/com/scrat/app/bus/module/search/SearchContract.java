@@ -1,7 +1,6 @@
 package com.scrat.app.bus.module.search;
 
 import com.scrat.app.bus.model.BusInfo;
-import com.scrat.app.core.common.BaseView;
 
 import java.util.List;
 
@@ -11,13 +10,6 @@ import java.util.List;
 public interface SearchContract {
     interface Presenter {
         void search(String content);
-    }
-
-    interface View extends BaseView {
-        void showNoResult();
-        void showResult(List<BusInfo> busInfos);
-        void onSearchError();
-        void onContentEmptyError();
     }
 
     interface SearchView {

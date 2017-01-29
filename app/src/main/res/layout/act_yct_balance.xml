@@ -2,13 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/custom_progress_orange_progress"
+    android:background="@color/orange_500"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/white"
+        android:background="@android:color/white"
         android:focusable="true"
         android:focusableInTouchMode="true"
         android:orientation="horizontal">
@@ -63,7 +63,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:text="请输入羊城通号码"
-            android:textColor="@color/white" />
+            android:textColor="@android:color/white" />
     </LinearLayout>
 
     <ScrollView
@@ -86,7 +86,7 @@
                 android:layout_height="wrap_content"
                 android:paddingBottom="10dp"
                 android:text="羊城卡号:   "
-                android:textColor="@color/white" />
+                android:textColor="@android:color/white" />
 
             <TextView
                 android:id="@+id/tv_yct_id"
@@ -94,7 +94,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/tv_name_yct_id"
-                android:textColor="@color/white" />
+                android:textColor="@android:color/white" />
 
             <TextView
                 android:id="@+id/tv_name_blance"
@@ -104,7 +104,7 @@
                 android:layout_below="@id/tv_name_yct_id"
                 android:paddingBottom="10dp"
                 android:text="余额 (元):   "
-                android:textColor="@color/white" />
+                android:textColor="@android:color/white" />
 
             <TextView
                 android:id="@+id/tv_balance"
@@ -113,7 +113,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tv_name_yct_id"
                 android:layout_toRightOf="@id/tv_name_blance"
-                android:textColor="@color/white" />
+                android:textColor="@android:color/white" />
 
             <TextView
                 android:id="@+id/tv_name_times"
@@ -123,7 +123,7 @@
                 android:layout_below="@id/tv_name_blance"
                 android:paddingBottom="10dp"
                 android:text="当月乘车次数:   "
-                android:textColor="@color/white" />
+                android:textColor="@android:color/white" />
 
             <TextView
                 android:id="@+id/tv_times"
@@ -132,7 +132,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tv_name_blance"
                 android:layout_toRightOf="@id/tv_name_times"
-                android:textColor="@color/white" />
+                android:textColor="@android:color/white" />
 
             <TextView
                 android:id="@+id/tv_name_end_dt"
@@ -142,7 +142,7 @@
                 android:layout_below="@id/tv_name_times"
                 android:paddingBottom="10dp"
                 android:text="数据截止时间:   "
-                android:textColor="@color/white" />
+                android:textColor="@android:color/white" />
 
             <TextView
                 android:id="@+id/tv_end_dt"
@@ -151,7 +151,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tv_name_times"
                 android:layout_toRightOf="@id/tv_name_end_dt"
-                android:textColor="@color/white" />
+                android:textColor="@android:color/white" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -159,7 +159,7 @@
                 android:layout_below="@id/tv_name_end_dt"
                 android:layout_marginTop="20dp"
                 android:text="重要提示: 因数据上传有时延, 查询数据结果为数据截止时间余额, 信息仅供参考"
-                android:textColor="@color/white" />
+                android:textColor="@android:color/white" />
 
         </RelativeLayout>
 

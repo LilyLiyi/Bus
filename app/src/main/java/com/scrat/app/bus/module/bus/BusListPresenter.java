@@ -5,12 +5,11 @@ import com.scrat.app.bus.model.BusStopInfo;
 import com.scrat.app.bus.model.GetBusStopInfoResponse;
 import com.scrat.app.bus.model.GetLocationResponse;
 import com.scrat.app.bus.model.LocationInfoItem;
+import com.scrat.app.bus.net.GsonParser;
 import com.scrat.app.bus.net.NetApi;
-import com.scrat.app.core.net.GsonParser;
-import com.scrat.app.core.net.ResponseCallback;
-import com.scrat.app.core.utils.L;
-import com.scrat.app.core.utils.NetUtil;
-import com.scrat.app.core.utils.Utils;
+import com.scrat.app.bus.net.ResponseCallback;
+import com.scrat.app.bus.utils.L;
+import com.scrat.app.bus.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,12 +33,6 @@ public class BusListPresenter implements BusListContract.Presenter {
 
     @Override
     public void init() {
-        if (!NetUtil.isNetworkAvailable()) {
-            mView.onNoNetworkError();
-            mView.hideLoading();
-            return;
-        }
-
         if (!Utils.isEmpty(mBusStopInfoList)) {
             loadLocation();
         } else {
@@ -62,12 +55,6 @@ public class BusListPresenter implements BusListContract.Presenter {
     }
 
     private void getBusStopName(final OnLoadBusStopNameListener listener) {
-        if (!NetUtil.isNetworkAvailable()) {
-            mView.onNoNetworkError();
-            mView.hideLoading();
-            return;
-        }
-
         mView.showLoading();
         NetApi.getBusStopName(mBusId, mDefaultOrder, new ResponseCallback<GetBusStopInfoResponse>() {
             @Override
@@ -97,12 +84,6 @@ public class BusListPresenter implements BusListContract.Presenter {
     }
 
     private void loadLocation() {
-        if (!NetUtil.isNetworkAvailable()) {
-            mView.onNoNetworkError();
-            mView.hideLoading();
-            return;
-        }
-
         mView.showLoading();
         NetApi.getBusLocation(mBusId, mDefaultOrder, new ResponseCallback<GetLocationResponse>() {
             @Override

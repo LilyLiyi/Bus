@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.scrat.app.bus.R;
-import com.scrat.app.core.common.BaseView;
 
 /**
  * Created by yixuanxuan on 16/5/15.
@@ -29,11 +28,6 @@ public abstract class BaseFragment extends Fragment implements BaseView {
     @Override
     public void hideLoading() {
 
-    }
-
-    @Override
-    public void onNoNetworkError() {
-        showMsg(getString(R.string.no_net_error));
     }
 
 }

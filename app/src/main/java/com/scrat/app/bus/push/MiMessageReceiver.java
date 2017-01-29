@@ -2,7 +2,7 @@ package com.scrat.app.bus.push;
 
 import android.content.Context;
 
-import com.scrat.app.core.utils.L;
+import com.scrat.app.bus.utils.L;
 import com.xiaomi.mipush.sdk.MiPushCommandMessage;
 import com.xiaomi.mipush.sdk.MiPushMessage;
 import com.xiaomi.mipush.sdk.PushMessageReceiver;

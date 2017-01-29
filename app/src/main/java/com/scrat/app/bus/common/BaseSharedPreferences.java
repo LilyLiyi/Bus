@@ -1,4 +1,4 @@
-package com.scrat.app.core.common;
+package com.scrat.app.bus.common;
 
 import android.content.Context;
 import android.content.SharedPreferences;

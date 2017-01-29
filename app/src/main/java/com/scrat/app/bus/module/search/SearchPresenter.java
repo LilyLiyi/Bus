@@ -7,8 +7,8 @@ import com.scrat.app.bus.BusApp;
 import com.scrat.app.bus.R;
 import com.scrat.app.bus.model.BusInfo;
 import com.scrat.app.bus.net.NetApi;
-import com.scrat.app.core.net.GsonParser;
-import com.scrat.app.core.net.ResponseCallback;
+import com.scrat.app.bus.net.GsonParser;
+import com.scrat.app.bus.net.ResponseCallback;
 
 import java.util.List;
 

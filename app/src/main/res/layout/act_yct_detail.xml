@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/custom_progress_orange_progress"
+    android:background="@color/orange_500"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -33,7 +33,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dp"
-        android:textColor="@color/white"
+        android:textColor="@android:color/white"
         android:visibility="gone" />
 
     <Button
@@ -43,9 +43,9 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
-        android:background="@color/white"
+        android:background="@android:color/white"
         android:text="@string/yct_balance"
-        android:textColor="@color/black" />
+        android:textColor="@android:color/black" />
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -63,7 +63,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="@string/nfc_note"
-            android:textColor="@color/white" />
+            android:textColor="@android:color/white" />
     </FrameLayout>
 
 

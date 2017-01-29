@@ -1,8 +1,6 @@
-package com.scrat.app.core.net;
+package com.scrat.app.bus.net;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
-import com.scrat.app.core.utils.L;
 
 /**
  * Created by yixuanxuan on 16/3/31.
@@ -26,12 +24,4 @@ public class GsonParser {
         return gson;
     }
 
-    public <T> T fromJson(String json, Class<T> classOfT) {
-        try {
-            return getGson().fromJson(json, classOfT);
-        } catch (JsonSyntaxException e) {
-            L.e(e);
-            return null;
-        }
-    }
 }

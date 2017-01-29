@@ -8,14 +8,14 @@
         android:id="@+id/tv_type"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/white" />
+        android:textColor="@android:color/white" />
 
     <TextView
         android:id="@+id/tv_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_type"
-        android:textColor="@color/white" />
+        android:textColor="@android:color/white" />
 
     <TextView
         android:id="@+id/tv_rate"
@@ -23,6 +23,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:textColor="@color/white" />
+        android:textColor="@android:color/white" />
 
 </RelativeLayout>

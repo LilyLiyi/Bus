@@ -1,7 +1,7 @@
 package com.scrat.app.bus.module;
 
 import com.scrat.app.bus.BusApp;
-import com.scrat.app.core.common.BaseSharedPreferences;
+import com.scrat.app.bus.common.BaseSharedPreferences;
 
 /**
  * Created by yixuanxuan on 16/6/22.

@@ -15,9 +15,8 @@ import android.widget.TextView;
 import com.scrat.app.bus.R;
 import com.scrat.app.bus.common.BaseActivity;
 import com.scrat.app.bus.module.ConfigSharePreferences;
-import com.scrat.app.core.net.OkHttpHelper;
-import com.scrat.app.core.utils.ActivityUtils;
-import com.scrat.app.core.utils.NetUtil;
+import com.scrat.app.bus.net.OkHttpHelper;
+import com.scrat.app.bus.utils.ActivityUtils;
 
 /**
  * Created by yixuanxuan on 16/6/1.
@@ -64,11 +63,7 @@ public class YctCardBalanceActivity extends BaseActivity implements View.OnClick
         }
         if (!TextUtils.isEmpty(cardId)) {
             mSearchEt.setText(cardId);
-            if (NetUtil.isNetworkAvailable()) {
-                showContent(cardId);
-            } else {
-                onNoNetworkError();
-            }
+            showContent(cardId);
         }
     }
 
@@ -153,11 +148,6 @@ public class YctCardBalanceActivity extends BaseActivity implements View.OnClick
             mTask.cancel(false);
         }
 
-        if (!NetUtil.isNetworkAvailable()) {
-            onNoNetworkError();
-            return;
-        }
-
         mTask = new AsyncTask<Void, Void, YctWechatDetail>() {
             @Override
             protected void onPreExecute() {
@@ -234,11 +224,6 @@ public class YctCardBalanceActivity extends BaseActivity implements View.OnClick
             String content = mSearchEt.getText().toString();
             if (TextUtils.isEmpty(content)) {
                 showToask("请输入正确的羊城通卡号");
-                return;
-            }
-
-            if (!NetUtil.isNetworkAvailable()) {
-                onNoNetworkError();
                 return;
             }
 

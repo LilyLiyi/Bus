@@ -7,8 +7,8 @@ import android.view.ViewGroup;
 
 import com.scrat.app.bus.R;
 import com.scrat.app.bus.model.BusStopInfo;
-import com.scrat.app.core.common.BaseRecyclerViewAdapter;
-import com.scrat.app.core.common.BaseRecyclerViewHolder;
+import com.scrat.app.bus.common.BaseRecyclerViewAdapter;
+import com.scrat.app.bus.common.BaseRecyclerViewHolder;
 
 import java.lang.ref.WeakReference;
 

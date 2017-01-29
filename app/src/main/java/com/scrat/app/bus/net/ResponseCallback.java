@@ -1,7 +1,7 @@
-package com.scrat.app.core.net;
+package com.scrat.app.bus.net;
 
-import com.scrat.app.core.utils.ActivityUtils;
-import com.scrat.app.core.utils.L;
+import com.scrat.app.bus.utils.ActivityUtils;
+import com.scrat.app.bus.utils.L;
 
 import java.io.IOException;
 

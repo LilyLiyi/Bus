@@ -16,7 +16,7 @@ import com.scrat.app.bus.data.SearchHistoryDao;
 import com.scrat.app.bus.databinding.FrgSearchBinding;
 import com.scrat.app.bus.model.BusInfo;
 import com.scrat.app.bus.module.bus.BusListActivity;
-import com.scrat.app.core.common.BaseRecyclerViewHolder;
+import com.scrat.app.bus.common.BaseRecyclerViewHolder;
 
 import java.util.Iterator;
 import java.util.List;
