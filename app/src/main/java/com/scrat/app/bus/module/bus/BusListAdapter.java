@@ -47,12 +47,7 @@ public class BusListAdapter extends BaseRecyclerViewAdapter<BusStopInfo, BaseRec
         if (mOnHeaderClickListener != null) {
             view.setOnClickListener(mOnHeaderClickListener);
         }
-        view.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return false;
-            }
-        });
+        view.setOnTouchListener(null);
         return new BaseRecyclerViewHolder(view);
     }
 
