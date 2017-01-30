@@ -19,13 +19,15 @@ import android.widget.TextView;
 
 import com.scrat.app.bus.R;
 import com.scrat.app.bus.common.BaseActivity2;
+import com.scrat.app.bus.common.BaseRecyclerViewHolder;
 import com.scrat.app.bus.common.RecyclerViewAdapter;
 import com.scrat.app.bus.data.SearchHistoryDao;
 import com.scrat.app.bus.databinding.SearchActivityBinding;
 import com.scrat.app.bus.databinding.SearchHeaderBinding;
 import com.scrat.app.bus.model.BusInfo;
 import com.scrat.app.bus.module.bus.BusListActivity;
-import com.scrat.app.bus.common.BaseRecyclerViewHolder;
+import com.scrat.app.bus.report.SearchContentReport;
+import com.scrat.app.bus.report.ViewReport;
 
 import java.util.List;
 
@@ -50,6 +52,12 @@ public class SearchBusActivity extends BaseActivity2 implements SearchContract.S
         mBinding = DataBindingUtil.setContentView(this, R.layout.search_activity);
         initView();
         new SearchPresenter(this);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ViewReport.reportView(this, "search_bus");
     }
 
     private void initView() {
@@ -107,6 +115,7 @@ public class SearchBusActivity extends BaseActivity2 implements SearchContract.S
     }
 
     private void search(String content) {
+        SearchContentReport.reportSearchText(this, content);
         mPresenter.search(content);
     }
 
@@ -133,6 +142,7 @@ public class SearchBusActivity extends BaseActivity2 implements SearchContract.S
 
     @Override
     public void onSearchFail(String msg) {
+        SearchContentReport.reportFail(this, mBinding.searchContent.getText().toString() + "_" + msg);
         showMsg(msg);
     }
 
@@ -164,16 +174,18 @@ public class SearchBusActivity extends BaseActivity2 implements SearchContract.S
         }
 
         @Override
-        protected void onBindContentViewHolder(BaseRecyclerViewHolder holder, int position, final BusInfo busInfo) {
+        protected void onBindContentViewHolder(final BaseRecyclerViewHolder holder, int position, final BusInfo busInfo) {
             holder.setText(R.id.tv_name, busInfo.getBusName());
             holder.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    SearchContentReport.reportClick(holder.getContext(), busInfo.getBusName());
                     mDao.saveOrUpdate(busInfo);
                     BusListActivity.show(mActivity, busInfo.getBusId(), busInfo.getBusName());
                     mActivity.finish();
                 }
             });
         }
+
     }
 }

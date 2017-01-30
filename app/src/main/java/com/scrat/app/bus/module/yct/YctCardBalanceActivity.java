@@ -16,6 +16,7 @@ import com.scrat.app.bus.R;
 import com.scrat.app.bus.common.BaseActivity;
 import com.scrat.app.bus.module.ConfigSharePreferences;
 import com.scrat.app.bus.net.OkHttpHelper;
+import com.scrat.app.bus.report.ViewReport;
 import com.scrat.app.bus.utils.ActivityUtils;
 
 /**
@@ -65,6 +66,12 @@ public class YctCardBalanceActivity extends BaseActivity implements View.OnClick
             mSearchEt.setText(cardId);
             showContent(cardId);
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ViewReport.reportView(this, "yct_balance");
     }
 
     @Override

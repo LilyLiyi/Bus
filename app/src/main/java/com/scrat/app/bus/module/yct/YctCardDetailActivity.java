@@ -25,6 +25,7 @@ import com.scrat.app.bus.model.NfcCardInfo;
 import com.scrat.app.bus.model.NfcCardLog;
 import com.scrat.app.bus.common.BaseRecyclerViewAdapter;
 import com.scrat.app.bus.common.BaseRecyclerViewHolder;
+import com.scrat.app.bus.report.ViewReport;
 
 import java.io.IOException;
 
@@ -45,8 +46,7 @@ public class YctCardDetailActivity extends BaseActivity implements View.OnClickL
         setContentView(R.layout.act_yct_detail);
 
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this.getApplicationContext());
-        mPendingIntent = PendingIntent.getActivity(this, 0, new Intent(this,
-                getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
+        mPendingIntent = PendingIntent.getActivity(this, 0, new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
 
         mBalanceBtn = (Button) findViewById(R.id.tv_balance);
         mBalanceBtn.setOnClickListener(this);
@@ -64,8 +64,7 @@ public class YctCardDetailActivity extends BaseActivity implements View.OnClickL
 
     private IntentFilter[] getIntentFilter() {
         try {
-            return new IntentFilter[]{new IntentFilter(
-                    NfcAdapter.ACTION_TECH_DISCOVERED, "*/*")};
+            return new IntentFilter[]{new IntentFilter(NfcAdapter.ACTION_TECH_DISCOVERED, "*/*")};
         } catch (IntentFilter.MalformedMimeTypeException e) {
             e.printStackTrace();
             return null;
@@ -90,6 +89,7 @@ public class YctCardDetailActivity extends BaseActivity implements View.OnClickL
             String[][] techLists = getTechLists();
             mNfcAdapter.enableForegroundDispatch(this, mPendingIntent, filters, techLists);
         }
+        ViewReport.reportView(this, "yct_detail");
     }
 
     @Override
@@ -118,8 +118,7 @@ public class YctCardDetailActivity extends BaseActivity implements View.OnClickL
         if (action == null)
             return;
 
-        if (!action.equals(NfcAdapter.ACTION_TAG_DISCOVERED) &&
-                !action.equals(NfcAdapter.ACTION_TECH_DISCOVERED))
+        if (!action.equals(NfcAdapter.ACTION_TAG_DISCOVERED) && !action.equals(NfcAdapter.ACTION_TECH_DISCOVERED))
             return;
 
         final Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);

@@ -1,5 +1,6 @@
 package com.scrat.app.bus.common;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.util.SparseArray;
 import android.view.View;
@@ -31,6 +32,10 @@ public class BaseRecyclerViewHolder extends RecyclerView.ViewHolder {
         TextView view = getView(viewId);
         view.setText(content);
         return this;
+    }
+
+    public Context getContext() {
+        return mConvertView.getContext();
     }
 
     public BaseRecyclerViewHolder setVisibility(int viewId, boolean visible) {

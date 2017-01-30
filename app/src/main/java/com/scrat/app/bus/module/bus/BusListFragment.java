@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import com.scrat.app.bus.R;
 import com.scrat.app.bus.common.BaseFragment;
 import com.scrat.app.bus.model.BusStopInfo;
+import com.scrat.app.bus.report.ViewReport;
 
 import java.util.List;
 
@@ -92,6 +93,7 @@ public class BusListFragment extends BaseFragment implements BusListContract.Vie
     public void onResume() {
         super.onResume();
         mPresenter.init();
+        ViewReport.reportView(getContext(), "bus_list");
     }
 
     @Override

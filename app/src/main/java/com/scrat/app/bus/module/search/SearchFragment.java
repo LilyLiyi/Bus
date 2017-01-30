@@ -17,6 +17,8 @@ import com.scrat.app.bus.databinding.FrgSearchBinding;
 import com.scrat.app.bus.model.BusInfo;
 import com.scrat.app.bus.module.bus.BusListActivity;
 import com.scrat.app.bus.common.BaseRecyclerViewHolder;
+import com.scrat.app.bus.report.SearchContentReport;
+import com.scrat.app.bus.report.ViewReport;
 
 import java.util.Iterator;
 import java.util.List;
@@ -79,6 +81,7 @@ public class SearchFragment extends BaseFragment {
             mBinding.guideBtn.setVisibility(View.GONE);
             mBinding.list.setVisibility(View.VISIBLE);
         }
+        ViewReport.reportView(getContext(), "main");
     }
 
     private static class Adapter extends RecyclerViewAdapter<BusInfo> {
@@ -98,7 +101,7 @@ public class SearchFragment extends BaseFragment {
         }
 
         @Override
-        protected void onBindContentViewHolder(BaseRecyclerViewHolder holder, int position, final BusInfo info) {
+        protected void onBindContentViewHolder(final BaseRecyclerViewHolder holder, int position, final BusInfo info) {
             holder.setText(R.id.title, info.getBusName())
                     .setOnClickListener(R.id.close, new View.OnClickListener() {
                         @Override
@@ -109,6 +112,7 @@ public class SearchFragment extends BaseFragment {
                     .setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            SearchContentReport.reportClick(holder.getContext(), info.getBusName());
                             mDao.update(info.getBusId());
                             BusListActivity.show(mActivity, info.getBusId(), info.getBusName());
                         }
