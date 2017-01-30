@@ -13,10 +13,10 @@ import java.util.List;
  * Created by yixuanxuan on 16/4/19.
  */
 public class BusApp extends Application {
-    private static Context mContext;
+    private static BusApp mApp;
 
     public static Context getContext() {
-        return mContext;
+        return mApp.getApplicationContext();
     }
 
     private static final String APP_ID = "2882303761517474662";
@@ -25,11 +25,11 @@ public class BusApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        mContext = this;
+        mApp = this;
         if (shouldInit()) {
             MiPushClient.registerPush(this, APP_ID, APP_KEY);
-            String alias = Utils.getAndroidID(mContext);
-            MiPushClient.setAlias(mContext, alias, null);
+            String alias = Utils.getAndroidID(mApp.getApplicationContext());
+            MiPushClient.setAlias(mApp.getApplicationContext(), alias, null);
         }
         com.squareup.leakcanary.LeakCanary.install(this);
     }
