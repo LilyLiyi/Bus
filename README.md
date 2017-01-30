@@ -10,8 +10,6 @@
 
 ![](https://github.com/huzhenjie/Bus/blob/master/wiki/images/screenshots_1.png)
 ![](https://github.com/huzhenjie/Bus/blob/master/wiki/images/screenshots_2.png)
-![](https://github.com/huzhenjie/Bus/blob/master/wiki/images/screenshots_3.png)
-![](https://github.com/huzhenjie/Bus/blob/master/wiki/images/screenshots_4.png)
 
 注: 仅用于学习用途
 ----------
