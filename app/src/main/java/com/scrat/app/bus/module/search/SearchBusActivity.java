@@ -143,6 +143,7 @@ public class SearchBusActivity extends BaseActivity2 implements SearchContract.S
     @Override
     public void onSearchFail(String msg) {
         SearchContentReport.reportFail(this, mBinding.searchContent.getText().toString() + "_" + msg);
+        mHeaderBinding.title.setText(R.string.search_fail);
         showMsg(msg);
     }
 
