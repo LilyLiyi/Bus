@@ -95,7 +95,6 @@ public class SearchActivity extends BaseActivity implements NavigationView.OnNav
                 ClickReport.reportClick(this, "menu_bus");
                 break;
             case R.id.nav_send:
-                ClickReport.reportClick(this, "menu_feedback");
                 boolean openSuccess = sendFeedback();
                 if (openSuccess) {
                     ClickReport.reportClick(this, "menu_feedback_success");
