@@ -19,6 +19,7 @@ import com.scrat.app.bus.module.AboutActivity;
 import com.scrat.app.bus.module.yct.YctCardDetailActivity;
 import com.scrat.app.bus.report.ClickReport;
 import com.scrat.app.bus.utils.ActivityUtils;
+import com.scrat.app.bus.utils.Utils;
 
 /**
  * Created by yixuanxuan on 16/5/20.
@@ -95,7 +96,12 @@ public class SearchActivity extends BaseActivity implements NavigationView.OnNav
                 break;
             case R.id.nav_send:
                 ClickReport.reportClick(this, "menu_feedback");
-                sendFeedback();
+                boolean openSuccess = sendFeedback();
+                if (openSuccess) {
+                    ClickReport.reportClick(this, "menu_feedback_success");
+                } else {
+                    ClickReport.reportClick(this, "menu_feedback_fail");
+                }
                 break;
             case R.id.nav_yct:
                 ClickReport.reportClick(this, "menu_yct");
@@ -125,15 +131,17 @@ public class SearchActivity extends BaseActivity implements NavigationView.OnNav
         }
     }
 
-    private void sendFeedback() {
+    private boolean sendFeedback() {
         try {
             Intent data = new Intent(Intent.ACTION_SENDTO);
             data.setData(Uri.parse("mailto:huzhenjie.dev@gmail.com"));
-            data.putExtra(Intent.EXTRA_SUBJECT, "[广州公交][" + System.currentTimeMillis() + "]");
-            data.putExtra(Intent.EXTRA_TEXT, "请输入您的反馈内容");
+            data.putExtra(Intent.EXTRA_SUBJECT, "[广州公交][" + Utils.getVersionName() + "][" + Utils.getVersionCode() + "]");
+            data.putExtra(Intent.EXTRA_TEXT, getString(R.string.feedback_hint));
             startActivity(data);
-        } catch (Exception ignore) {
-
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
         }
 
     }

@@ -29,5 +29,6 @@
     <string name="search_fail">"搜索失败，请重试"</string>
     <string name="back">返回</string>
     <string name="about">关于</string>
+    <string name="feedback_hint">您想跟我们说：</string>
 
 </resources>
