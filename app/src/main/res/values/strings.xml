@@ -27,5 +27,7 @@
     <string name="bus_search">公交搜索</string>
     <string name="search_history">搜索历史</string>
     <string name="search_fail">"搜索失败，请重试"</string>
+    <string name="back">返回</string>
+    <string name="about">关于</string>
 
 </resources>

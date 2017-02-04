@@ -15,7 +15,9 @@ import android.view.View;
 
 import com.scrat.app.bus.R;
 import com.scrat.app.bus.common.BaseActivity;
+import com.scrat.app.bus.module.AboutActivity;
 import com.scrat.app.bus.module.yct.YctCardDetailActivity;
+import com.scrat.app.bus.report.ClickReport;
 import com.scrat.app.bus.utils.ActivityUtils;
 
 /**
@@ -87,13 +89,23 @@ public class SearchActivity extends BaseActivity implements NavigationView.OnNav
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        if (id == R.id.nav_send) {
-            sendFeedback();
-        } else if (id == R.id.nav_yct) {
-            Intent i = new Intent(this, YctCardDetailActivity.class);
-            startActivity(i);
+        switch (item.getItemId()) {
+            case R.id.nav_bus:
+                ClickReport.reportClick(this, "menu_bus");
+                break;
+            case R.id.nav_send:
+                ClickReport.reportClick(this, "menu_feedback");
+                sendFeedback();
+                break;
+            case R.id.nav_yct:
+                ClickReport.reportClick(this, "menu_yct");
+                Intent i = new Intent(this, YctCardDetailActivity.class);
+                startActivity(i);
+                break;
+            case R.id.nav_about:
+                ClickReport.reportClick(this, "menu_about");
+                AboutActivity.show(this);
+                break;
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
