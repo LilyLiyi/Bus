@@ -176,7 +176,7 @@ public class YctCardBalanceActivity extends BaseActivity implements View.OnClick
                 try {
                     String content = OkHttpHelper.getInstance().get(url);
                     content = content.substring(content.indexOf(head) + head.length(), content.indexOf(botton) - botton.length()).replaceAll("[\\t\\n\\r]", "");
-                    String[] datas = content.split("</tr><tr>");
+                    String[] datas = content.replace(" ", "").split("</tr><tr>");
                     for (String data : datas) {
                         String[] cols = data.split("</td><td>");
                         if (cols.length != 2) {
@@ -190,6 +190,9 @@ public class YctCardBalanceActivity extends BaseActivity implements View.OnClick
                             detail.setCardId(value);
                         } else if (key.contains("据")) {
                             // 数据截止时间
+                            if (value.length() > 10) {
+                                value = value.substring(0, 10) + " " + value.substring(10, value.length());
+                            }
                             detail.setEndDt(value);
                         } else if (key.contains("余")) {
                             // 余额（元）
