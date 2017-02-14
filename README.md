@@ -11,6 +11,22 @@
 ![](https://github.com/huzhenjie/Bus/blob/master/wiki/images/screenshots_1.png)
 ![](https://github.com/huzhenjie/Bus/blob/master/wiki/images/screenshots_2.png)
 
+# Update logs
+
+## v1.13
+
+1. 增加显示公交营运时间
+1. 增加关于页面
+1. 增加用户体验计划
+1. 修改反馈标题格式
+1. 修改公交到站显示方式
+1. 优化特大字体界面下的体验
+1. 优化状态栏色调
+1. 优化安装包大小
+1. 修复羊城通查询失败问题
+1. 修复搜索提示错误问题
+1. 修复崩溃
+
 注: 仅用于学习用途
 ----------
 
