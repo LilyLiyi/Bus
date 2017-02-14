@@ -15,7 +15,7 @@ public interface BusListContract {
     }
 
     interface View extends BaseView {
-        void showBusStop(List<BusStopInfo> list);
+        void showBusStop(List<BusStopInfo> list, String beginTime, String endTime);
         void onLoadDataError();
         void showNoBusOnline();
     }

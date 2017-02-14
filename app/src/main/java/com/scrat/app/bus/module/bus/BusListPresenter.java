@@ -8,7 +8,6 @@ import com.scrat.app.bus.model.LocationInfoItem;
 import com.scrat.app.bus.net.GsonParser;
 import com.scrat.app.bus.net.NetApi;
 import com.scrat.app.bus.net.ResponseCallback;
-import com.scrat.app.bus.utils.L;
 import com.scrat.app.bus.utils.Utils;
 
 import java.util.ArrayList;
@@ -24,6 +23,8 @@ public class BusListPresenter implements BusListContract.Presenter {
     private boolean mDefaultOrder = true;
     private List<BusStopInfo> mBusStopInfoList;
     private BusListContract.View mView;
+    private String mBeginTime;
+    private String mEndTime;
 
     public BusListPresenter(BusListContract.View view, String busId) {
         mBusId = busId;
@@ -38,9 +39,11 @@ public class BusListPresenter implements BusListContract.Presenter {
         } else {
             getBusStopName(new OnLoadBusStopNameListener() {
                 @Override
-                public void onLoadBusStopNameSuccess(List<BusStopInfo> busStopInfoList) {
-                    mBusStopInfoList = busStopInfoList;
-                    mView.showBusStop(mBusStopInfoList);
+                public void onLoadBusStopNameSuccess(GetBusStopInfoResponse response) {
+                    mBusStopInfoList = response.getBusStopInfoList();
+                    mBeginTime = response.getBeginTime();
+                    mEndTime = response.getEndTime();
+                    mView.showBusStop(mBusStopInfoList, mBeginTime, mEndTime);
                     loadLocation();
                 }
             });
@@ -58,20 +61,17 @@ public class BusListPresenter implements BusListContract.Presenter {
         mView.showLoading();
         NetApi.getBusStopName(mBusId, mDefaultOrder, new ResponseCallback<GetBusStopInfoResponse>() {
             @Override
-            protected void onRequestSuccess(GetBusStopInfoResponse getBusStopInfoResponse) {
+            protected void onRequestSuccess(GetBusStopInfoResponse response) {
                 mView.hideLoading();
-                L.e("%s", getBusStopInfoResponse);
-                List<BusStopInfo> busStopInfoList = getBusStopInfoResponse.getBusStopInfoList();
                 if (listener == null)
                     return;
 
-                listener.onLoadBusStopNameSuccess(busStopInfoList);
+                listener.onLoadBusStopNameSuccess(response);
             }
 
             @Override
             protected GetBusStopInfoResponse parseResponse(Response response) {
-                return GsonParser.getInstance().getGson()
-                        .fromJson(response.body().charStream(), GetBusStopInfoResponse.class);
+                return GsonParser.getInstance().getGson().fromJson(response.body().charStream(), GetBusStopInfoResponse.class);
             }
 
             @Override
@@ -110,7 +110,7 @@ public class BusListPresenter implements BusListContract.Presenter {
                     }
                 }
 
-                mView.showBusStop(mBusStopInfoList);
+                mView.showBusStop(mBusStopInfoList, mBeginTime, mEndTime);
 
                 if (!hasBus) {
                     mView.showNoBusOnline();
@@ -137,6 +137,6 @@ public class BusListPresenter implements BusListContract.Presenter {
     }
 
     /*package*/ interface OnLoadBusStopNameListener {
-        void onLoadBusStopNameSuccess(List<BusStopInfo> busStopInfoList);
+        void onLoadBusStopNameSuccess(GetBusStopInfoResponse response);
     }
 }

@@ -68,7 +68,7 @@ public class BusListFragment extends BaseFragment implements BusListContract.Vie
             }
         });
 
-        final SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout)root.findViewById(R.id.refresh_layout);
+        final SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) root.findViewById(R.id.refresh_layout);
         swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_light, android.R.color.holo_red_light, android.R.color.holo_orange_light, android.R.color.holo_green_light);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -77,7 +77,7 @@ public class BusListFragment extends BaseFragment implements BusListContract.Vie
             }
         });
 
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener(){
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 int topRowVerticalPosition =
@@ -103,7 +103,7 @@ public class BusListFragment extends BaseFragment implements BusListContract.Vie
     }
 
     @Override
-    public void showBusStop(List<BusStopInfo> list) {
+    public void showBusStop(List<BusStopInfo> list, String beginTime, String endTime) {
         String from;
         String to;
         if (list.size() == 0) {
@@ -112,11 +112,12 @@ public class BusListFragment extends BaseFragment implements BusListContract.Vie
             to = unknown;
         } else {
             from = list.get(0).getBusStopName();
-            to = list.get(list.size()-1).getBusStopName();
+            to = list.get(list.size() - 1).getBusStopName();
         }
         mAdapter.setFrom(from);
         mAdapter.setTo(to);
         mAdapter.setList(list);
+        ((BusListActivity) getActivity()).setTitle(beginTime, endTime);
     }
 
     @Override
