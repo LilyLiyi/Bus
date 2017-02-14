@@ -46,6 +46,11 @@ public abstract class ResponseCallback<T> implements Callback {
             return;
         }
 
+        if (t == null) {
+            onRequestFailure(new Exception("解析出错"));
+            return;
+        }
+
         notifyResponseSuccess(t);
     }
 
