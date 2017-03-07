@@ -34,7 +34,7 @@ public abstract class ResponseCallback<T> implements Callback {
         L.d("code %s", response.code());
 
         if (!response.isSuccessful()) {
-            onRequestFailure(new IOException("Unexpected code " + response));
+            onFailure(call, new IOException("Unexpected code " + response));
             return;
         }
 
@@ -42,12 +42,12 @@ public abstract class ResponseCallback<T> implements Callback {
         try {
             t = parseResponse(response);
         } catch (Exception e) {
-            onRequestFailure(e);
+            onFailure(call, new IOException(e));
             return;
         }
 
         if (t == null) {
-            onRequestFailure(new Exception("解析出错"));
+            onFailure(call, new IOException("解析出错"));
             return;
         }
 
