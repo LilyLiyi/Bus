@@ -117,7 +117,10 @@ public class BusListFragment extends BaseFragment implements BusListContract.Vie
         mAdapter.setFrom(from);
         mAdapter.setTo(to);
         mAdapter.setList(list);
-        ((BusListActivity) getActivity()).setTitle(beginTime, endTime);
+        if (getView() != null && getActivity() != null) {
+            // fix dump
+            ((BusListActivity) getActivity()).setTitle(beginTime, endTime);
+        }
     }
 
     @Override
