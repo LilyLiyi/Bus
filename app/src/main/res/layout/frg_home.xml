@@ -1,28 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.scrat.app.bus.view.ScrollChildSwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/refresh_layout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <FrameLayout
+    <com.scrat.app.bus.view.ScrollChildSwipeRefreshLayout
+        android:id="@+id/refresh_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_list"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/iv_refresh"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_margin="8dp"
-            android:background="@drawable/btn_fab"
-            android:contentDescription="@null"
-            android:padding="20dp"
-            android:src="@drawable/ic_refresh" />
-    </FrameLayout>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
-</com.scrat.app.bus.view.ScrollChildSwipeRefreshLayout>
+            <ImageView
+                android:id="@+id/refresh_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_margin="8dp"
+                android:background="@drawable/btn_fab"
+                android:contentDescription="@null"
+                android:padding="20dp"
+                android:src="@drawable/ic_refresh"
+                android:visibility="visible" />
+
+            <TextView
+                android:id="@+id/refresh_btn"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_gravity="bottom|end"
+                android:layout_margin="8dp"
+                android:background="@drawable/btn_fab"
+                android:clickable="true"
+                android:contentDescription="@null"
+                android:gravity="center"
+                android:text="10"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/title"
+                android:textStyle="bold"
+                android:visibility="gone" />
+        </FrameLayout>
+
+    </com.scrat.app.bus.view.ScrollChildSwipeRefreshLayout>
+</layout>

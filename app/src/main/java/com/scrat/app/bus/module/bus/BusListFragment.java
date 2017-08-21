@@ -9,23 +9,26 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import com.scrat.app.bus.R;
 import com.scrat.app.bus.common.BaseFragment;
+import com.scrat.app.bus.databinding.FrgHomeBinding;
 import com.scrat.app.bus.model.BusStopInfo;
+import com.scrat.app.bus.module.ConfigSharePreferences;
 import com.scrat.app.bus.report.ViewReport;
+import com.scrat.app.bus.utils.L;
 
 import java.util.List;
 
 /**
  * Created by yixuanxuan on 16/5/15.
  */
-public class BusListFragment extends BaseFragment implements BusListContract.View, View.OnClickListener {
+public class BusListFragment extends BaseFragment implements BusListContract.View {
     private BusListContract.Presenter mPresenter;
     private BusListAdapter mAdapter;
-    private ImageView mRefreshIv;
     private boolean mIsRefreshing;
+    private boolean autoRefresh;
+    private FrgHomeBinding binding;
 
     private static final String sKeyId = "bus_id";
 
@@ -52,48 +55,106 @@ public class BusListFragment extends BaseFragment implements BusListContract.Vie
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.frg_home, container, false);
-        mRefreshIv = (ImageView) root.findViewById(R.id.iv_refresh);
-        mRefreshIv.getBackground().setAlpha(100);
-        mRefreshIv.setOnClickListener(this);
-        RecyclerView recyclerView = (RecyclerView) root.findViewById(R.id.rv_list);
+    public View onCreateView(
+            LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        binding = FrgHomeBinding.inflate(inflater, container, false);
+        binding.refreshImg.getBackground().setAlpha(100);
+        binding.refreshImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPresenter.init();
+            }
+        });
+        binding.refreshBtn.getBackground().setAlpha(100);
+        binding.refreshBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPresenter.init();
+            }
+        });
         final LinearLayoutManager manager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(manager);
-        recyclerView.setAdapter(mAdapter);
-        recyclerView.setOnTouchListener(new View.OnTouchListener() {
+        binding.list.setLayoutManager(manager);
+        binding.list.setAdapter(mAdapter);
+        binding.list.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 return mIsRefreshing;
             }
         });
 
-        final SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) root.findViewById(R.id.refresh_layout);
-        swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_light, android.R.color.holo_red_light, android.R.color.holo_orange_light, android.R.color.holo_green_light);
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        binding.refreshLayout.setColorSchemeResources(
+                android.R.color.holo_blue_light,
+                android.R.color.holo_red_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_green_light);
+        binding.refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 mPresenter.init();
             }
         });
 
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        binding.list.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 int topRowVerticalPosition =
                         (recyclerView == null || recyclerView.getChildCount() == 0) ? 0 : recyclerView.getChildAt(0).getTop();
-                swipeRefreshLayout.setEnabled(topRowVerticalPosition >= 0);
+                binding.refreshLayout.setEnabled(topRowVerticalPosition >= 0);
             }
         });
 
-        return root;
+        return binding.getRoot();
+    }
+
+    public void setAutoRefresh(boolean autoRefresh) {
+        seconds = 0;
+        this.autoRefresh = autoRefresh;
+        refreshCheck();
+    }
+
+    private volatile int seconds;
+    private static final int REFRESH_SECOND = 10;
+
+    private void refreshCheck() {
+        if (isDestroyed()) {
+            return;
+        }
+
+        if (autoRefresh) {
+            binding.refreshBtn.setVisibility(View.VISIBLE);
+            binding.refreshImg.setVisibility(View.GONE);
+            binding.refreshBtn.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    L.d("seconds=" + seconds);
+                    seconds++;
+                    binding.refreshBtn.setText((REFRESH_SECOND - seconds) + "");
+                    if (REFRESH_SECOND <= seconds) {
+                        mPresenter.init();
+                        seconds = 0;
+                    }
+                    refreshCheck();
+                }
+            }, 1000);
+        } else {
+            binding.refreshBtn.setVisibility(View.GONE);
+            binding.refreshImg.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
     public void onResume() {
         super.onResume();
         mPresenter.init();
+        autoRefresh = ConfigSharePreferences.getInstance().isAutoRefreshBushList();
+        refreshCheck();
         ViewReport.reportView(getContext(), "bus_list");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        autoRefresh = false;
     }
 
     @Override
@@ -137,13 +198,6 @@ public class BusListFragment extends BaseFragment implements BusListContract.Vie
             return;
 
         showMsg(getString(R.string.server_error));
-    }
-
-    @Override
-    public void onClick(View v) {
-        if (v == mRefreshIv) {
-            mPresenter.init();
-        }
     }
 
     @Override

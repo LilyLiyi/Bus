@@ -213,7 +213,7 @@ public class YctCardBalanceActivity extends BaseActivity implements View.OnClick
                 super.onPostExecute(detail);
                 hideLoading();
                 if (detail == null) {
-                    showToask("服务器有点抽风, 请重试...");
+                    showSnackbar("服务器有点抽风, 请重试...");
                 } else {
                     mYctIdTv.setText(detail.getCardId());
                     mEndDtTv.setText(detail.getEndDt());
@@ -233,7 +233,7 @@ public class YctCardBalanceActivity extends BaseActivity implements View.OnClick
         if (v == mSearchIv) {
             String content = mSearchEt.getText().toString();
             if (TextUtils.isEmpty(content)) {
-                showToask("请输入正确的羊城通卡号");
+                showSnackbar("请输入正确的羊城通卡号");
                 return;
             }
 

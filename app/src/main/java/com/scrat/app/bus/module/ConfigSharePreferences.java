@@ -28,4 +28,12 @@ public class ConfigSharePreferences extends BaseSharedPreferences {
     public String getCardId() {
         return getString(KEY_CARD_ID, "");
     }
+
+    private static final String AUTO_REFRESH_BUS_LIST = "auto_refresh_bus_list";
+    public void setAutoRefreshBusList(boolean auto) {
+        setBoolean(AUTO_REFRESH_BUS_LIST, auto);
+    }
+    public boolean isAutoRefreshBushList() {
+        return getBoolean(AUTO_REFRESH_BUS_LIST, false);
+    }
 }
