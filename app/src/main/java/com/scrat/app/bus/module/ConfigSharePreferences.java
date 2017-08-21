@@ -28,13 +28,4 @@ public class ConfigSharePreferences extends BaseSharedPreferences {
     public String getCardId() {
         return getString(KEY_CARD_ID, "");
     }
-
-    private static final String KEY_LAST_SEARCH_BUS_NAME = "last_search_bus_name";
-    public void setLastSearchBusName(String bus) {
-        setString(KEY_LAST_SEARCH_BUS_NAME, bus);
-    }
-    public String getLastSearchBusName() {
-        return getString(KEY_LAST_SEARCH_BUS_NAME, "");
-    }
-
 }

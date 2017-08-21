@@ -2,7 +2,6 @@ package com.scrat.app.bus.module.bus;
 
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -71,6 +70,5 @@ public class BusListAdapter extends BaseRecyclerViewAdapter<BusStopInfo, BaseRec
             name.setTextColor(ContextCompat.getColor(name.getContext(), android.R.color.black));
         }
     }
-
 
 }

@@ -1,12 +1,10 @@
 package com.scrat.app.bus.common;
 
 import android.os.Build;
-import android.support.v4.app.Fragment;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.Toast;
-
-import com.scrat.app.bus.R;
 
 /**
  * Created by yixuanxuan on 16/5/15.
