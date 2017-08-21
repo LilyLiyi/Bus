@@ -1,5 +1,6 @@
 package com.scrat.app.bus.common;
 
+import android.os.Build;
 import android.support.v4.app.Fragment;
 import android.support.design.widget.Snackbar;
 import android.view.View;
@@ -28,6 +29,24 @@ public abstract class BaseFragment extends Fragment implements BaseView {
     @Override
     public void hideLoading() {
 
+    }
+
+    protected boolean isDestroyed() {
+        if (getView() == null) {
+            return true;
+        }
+
+        if (getActivity() == null) {
+            return true;
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            if (getActivity().isDestroyed()) {
+                return true;
+            }
+        }
+
+        return getActivity().isFinishing();
     }
 
 }
