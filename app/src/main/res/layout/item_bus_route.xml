@@ -2,8 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?attr/selectableItemBackground"
-    android:clickable="true">
+    android:background="@android:color/white"
+    android:clickable="true"
+    android:foreground="?attr/selectableItemBackground">
 
     <View
         android:id="@+id/center"
@@ -42,7 +43,7 @@
         android:layout_marginTop="8dp"
         android:layout_toLeftOf="@id/order"
         android:layout_toRightOf="@id/start_bus"
-        android:textSize="18sp" />
+        android:textSize="@dimen/subheading" />
 
     <TextView
         android:id="@+id/end_bus"
@@ -66,11 +67,6 @@
         android:layout_marginLeft="4dp"
         android:layout_toLeftOf="@id/order"
         android:layout_toRightOf="@id/end_bus"
-        android:textSize="18sp" />
+        android:textSize="@dimen/subheading" />
 
-    <View
-        android:layout_width="wrap_content"
-        android:layout_height="1dp"
-        android:layout_below="@id/end_bus"
-        android:background="@color/bg_default" />
 </RelativeLayout>

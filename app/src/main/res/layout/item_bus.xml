@@ -29,7 +29,8 @@
             android:minHeight="30dp"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/body" />
     </LinearLayout>
 
     <ImageView
