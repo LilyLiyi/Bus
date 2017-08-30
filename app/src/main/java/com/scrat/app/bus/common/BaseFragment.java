@@ -10,6 +10,15 @@ import android.widget.Toast;
  * Created by yixuanxuan on 16/5/15.
  */
 public abstract class BaseFragment extends Fragment implements BaseView {
+    protected void showMsg(int resId) {
+        View view = getView();
+        if (view != null) {
+            Snackbar.make(view, resId, Snackbar.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(getActivity(), resId, Toast.LENGTH_LONG).show();
+        }
+    }
+
     protected void showMsg(String content) {
         View view = getView();
         if (view != null) {

@@ -128,12 +128,16 @@ public class BusListFragment extends BaseFragment implements BusListContract.Vie
                 public void run() {
                     L.d("seconds=" + seconds);
                     seconds++;
-                    binding.refreshBtn.setText((REFRESH_SECOND - seconds) + "");
-                    if (REFRESH_SECOND <= seconds) {
-                        mPresenter.init();
-                        seconds = 0;
+                    try {
+                        binding.refreshBtn.setText(String.valueOf(REFRESH_SECOND - seconds));
+                        if (REFRESH_SECOND <= seconds) {
+                            mPresenter.init();
+                            seconds = 0;
+                        }
+                        refreshCheck();
+                    } catch (Exception e) {
+                        showMsg(R.string.server_error);
                     }
-                    refreshCheck();
                 }
             }, 1000);
         } else {
